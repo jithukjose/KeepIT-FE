@@ -1,20 +1,42 @@
 import React, { Component } from 'react'
-// import { Route } from 'react-router-dom'
 
 import SearchModule from '../../components/Search/index.search'
-import TableModule from '../../components/Tables/index.tables'
+import UsersTableModule from '../Users/TableUsers'
 
 class UsersContainer extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      userData: [],
+      slicedData: []
+    }
+  }
+
+  componentDidMount() {
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then((response) => response.json())
+      .then((json) =>
+        this.setState(
+          {
+            usersData: json
+          },
+          () => {
+            this.setState({
+              slicedData: this.state.usersData.slice(1, 20)
+            })
+            // console.log('here', slicedData)
+          }
+        )
+      )
+  }
+
   render() {
+    const { slicedData } = this.state
     return (
       <div>
         <SearchModule />
-        <TableModule />
+        <UsersTableModule userDatas={slicedData}></UsersTableModule>
       </div>
-
-      //    <Route path ="/" exact component={Posts} />
-      //    <Route path ="/new-post" exact component ={NewPost} />
-      //    <Route path ="/:id" exact component={Fullpost} />
     )
   }
 }

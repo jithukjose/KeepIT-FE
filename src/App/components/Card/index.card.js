@@ -3,32 +3,23 @@ import React from 'react'
 
 import { Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap'
 
-const CardModule = () => {
-  return (
-    <div style={{ display: 'inline-block' }}>
-      <Row>
-        <Col sm="4">
-          <Card body>
-            <CardTitle>Special Title Treatment</CardTitle>
-            <CardText>
-              With supporting text below as a natural lead-in to additional content.
-            </CardText>
-            <Button>Go somewhere</Button>
-          </Card>
-        </Col>
+// const CardModule = (postData) => {
+//   console.log(postData, 'data')
 
-        <Col sm="4">
-          <Card body>
-            <CardTitle>Special Title Treatment</CardTitle>
-            <CardText>
-              With supporting text below as a natural lead-in to additional content.
-            </CardText>
-            <Button>Go somewhere</Button>
-          </Card>
-        </Col>
-      </Row>
-    </div>
-  )
+const CardModule = ({ postData }) => {
+  const singleData = postData.map((singleDatas) => (
+    <Row>
+      <Col sm="3">
+        <Card body>
+          <CardTitle>{singleDatas.title}</CardTitle>
+          <CardText>{singleDatas.body}</CardText>
+          <Button>Details</Button>
+        </Card>
+      </Col>
+    </Row>
+  ))
+
+  return <div style={{ display: 'inline-block' }}>{singleData}</div>
 }
 
 export default CardModule

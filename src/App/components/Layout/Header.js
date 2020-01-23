@@ -14,7 +14,7 @@ const HeaderModule = () => {
   ))
 
   return (
-    <div>
+    <div className="fixed-top">
       <Nav style={{ backgroundColor: 'lightblue' }}>{renderedMenuItems}</Nav>
     </div>
   )

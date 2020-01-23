@@ -5,14 +5,6 @@ import PostContainer from '../src/App/Containers/Posts/Index.post'
 import TodosContainer from '../src/App/Containers/Todos/index.todos'
 import UsersContainer from '../src/App/Containers/Users/index.users'
 
-//   <Link to='/'>Home</Link>
-// </li>
-// <li>
-//   <Link
-//     to={{
-//       pathname: '/new-post'
-//     }}
-
 const Routes = () => {
   return (
     <Switch>

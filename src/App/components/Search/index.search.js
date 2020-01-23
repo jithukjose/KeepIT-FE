@@ -8,7 +8,7 @@ const SearchModule = ({ children }) => {
     <div
       style={{
         width: '900px',
-        margin: 'auto',
+        margin: '80px',
         border: '3px solid #73AD21'
       }}
     >
