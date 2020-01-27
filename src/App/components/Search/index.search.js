@@ -1,9 +1,8 @@
 import React from 'react'
-// import './App.css';
 
-import { InputGroup, InputGroupAddon, InputGroupText, Input } from 'reactstrap'
+import { InputGroup, InputGroupAddon, Input, Button } from 'reactstrap'
 
-const SearchModule = ({ children }) => {
+const SearchModule = ({ children, searchHandler, inputValue, onSearchBtnClick }) => {
   return (
     <div
       style={{
@@ -14,8 +13,8 @@ const SearchModule = ({ children }) => {
     >
       <InputGroup>
         <InputGroupAddon addonType="prepend"></InputGroupAddon>
-        <Input placeholder="Search" />
-        <InputGroupText>Search</InputGroupText>
+        <Input placeholder="Search by ID" onChange={(e) => searchHandler(e)} value={inputValue} />
+        <Button onClick={() => onSearchBtnClick()}>Search</Button>
       </InputGroup>
       {children}
     </div>
