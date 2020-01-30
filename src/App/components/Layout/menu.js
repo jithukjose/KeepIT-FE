@@ -10,5 +10,9 @@ export default [
   {
     menuName: 'Todos',
     Url: '/Todos'
+  },
+  {
+    menuName: 'Profile',
+    Url: '/Profile'
   }
 ]

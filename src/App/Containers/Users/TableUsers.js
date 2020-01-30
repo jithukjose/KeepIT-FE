@@ -9,7 +9,7 @@ const UsersTableModule = ({ userDatas }) => {
       <td>{singleDatas.id}</td>
       <td>{singleDatas.name}</td>
       <td>{singleDatas.email}</td>
-      <td>{singleDatas.address.city}</td>
+      <td>{singleDatas.address && singleDatas.address.city}</td>
     </tr>
   ))
   return (

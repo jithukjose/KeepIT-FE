@@ -6,7 +6,7 @@ import Path from '../../components/Layout/menu'
 
 const HeaderModule = () => {
   const renderedMenuItems = Path.map((menu) => (
-    <NavItem>
+    <NavItem key={menu.menuName}>
       <Link component={NavLink} to={menu.Url}>
         {menu.menuName}
       </Link>
