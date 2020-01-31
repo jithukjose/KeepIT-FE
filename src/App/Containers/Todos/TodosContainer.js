@@ -73,7 +73,7 @@ class TodosContainer extends Component {
       <div>
         <SearchModule
           searchHandler={this.SearchHandler}
-          onSearchBtnClick={this.onSearchBtnClick}
+          onSearchBtnClick={this.OnSearchBtnClick}
           keyPressHandler={this.KeyPressHandler}
           onScreenEnterKey={this.OnScreenEnterKey}
         />
