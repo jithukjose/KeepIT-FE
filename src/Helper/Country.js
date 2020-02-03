@@ -1,5 +1,9 @@
 export default [
   {
+    value: '',
+    countryName: ''
+  },
+  {
     value: 'india',
     countryName: 'India'
   },

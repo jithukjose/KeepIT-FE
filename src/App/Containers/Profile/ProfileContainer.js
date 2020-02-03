@@ -8,7 +8,10 @@ class ProfileContainer extends Component {
     age: '',
     country: '',
     date: '',
-    startDate: new Date()
+    startDate: new Date(),
+    isDataAvaliable: false,
+    myname: ''
+    // profileName: ''
   }
 
   // onNameChangeHandler = (e) => {
@@ -18,9 +21,7 @@ class ProfileContainer extends Component {
   // }
 
   handleChangeForDate = (date) => {
-    console.log(date, 'da')
     const newdate = moment(date).format('MM/DD/YYYY')
-    console.log(newdate)
 
     this.setState({
       startDate: date,
@@ -29,36 +30,84 @@ class ProfileContainer extends Component {
   }
 
   onChangeHandler = (event) => {
-    console.log(event, 'event')
     let value = event.target.value
     let fieldName = event.target.name
 
-    console.log(fieldName, 'hii')
-    console.log(value, 'hiii')
+    this.setState({
+      [fieldName]: value //this value will assign to this respective fieldname
+    })
+  }
+  OnSubmitButton = (event) => {
+    this.setState({
+      isDataAvaliable: true,
+      fullname: this.state.name,
+      agevalue: this.state.age,
+      countryValue: this.state.country,
+      dateValue: this.state.newDate
+    })
+    let myName = this.state.name
+    let myAge = this.state.age
 
-    this.setState(
-      {
-        [fieldName]: value //this value will assign to this respective fieldname
-      },
-      () => {
-        // console.log(fieldName, '----------', value)
-      }
-    )
+    this.setState({
+      // profileName:
+      name: '',
+      age: '',
+      country: '',
+      newDate: ''
+    })
+
+    // this.setState({
+    //   profileName: this.state.name,
+    //   getAge: this.state.age,
+    //   getCountry: this.state.country,
+    //   getDate: this.state.newDate
+    // })
+  }
+  OnEditButton = () => {
+    this.setState({
+      fullname: '',
+      agevalue: '',
+      countryValue: '',
+      dateValue: ''
+    })
+
+    // console.log(this.myName, 'mm')
+    // this.setState({
+    //   fullname: this.myName
+    // })
   }
 
   render() {
-    const { name, age, country, date } = this.state
+    const {
+      name,
+      age,
+      isDataAvaliable,
+      country,
+      startDate,
+      newDate,
+      fullname,
+      agevalue,
+      countryValue,
+      dateValue
+    } = this.state
+    // console.log(profileName, 'profleName')
 
     return (
       <ProfileModule
-        startDate={this.state.startDate}
+        isDataAvaliable={isDataAvaliable}
+        OnSubmitButton={this.OnSubmitButton}
+        startDate={startDate}
         handleChangeForDate={this.handleChangeForDate}
         onChangeHandler={this.onChangeHandler}
         profileName={name}
+        proName={fullname}
+        proage={agevalue}
+        procountry={countryValue}
         profileAge={age}
         profileCountry={country}
-        profileDate={date}
-        newDate={this.state.newDate}
+        profileDate={newDate}
+        proDate={dateValue}
+        OnEditButton={this.OnEditButton}
       />
     )
   }
