@@ -4,8 +4,27 @@ import './index.css'
 import * as serviceWorker from './serviceWorker'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import App from './App'
+import { LastLocationProvider } from 'react-router-last-location'
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
 
-ReactDOM.render(<App />, document.getElementById('root'))
+import Store from './Store/store'
+import { Router } from 'react-router-dom'
+
+const { store, persistor, history } = Store()
+
+ReactDOM.render(
+  <Router history={history}>
+    <LastLocationProvider>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <App />
+        </PersistGate>
+      </Provider>
+    </LastLocationProvider>
+  </Router>,
+  document.getElementById('root')
+)
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

@@ -4,14 +4,7 @@ import { Switch, Route } from 'react-router-dom'
 import PostContainer from '../src/App/Containers/Posts/Index.post'
 import TodosContainer from '../src/App/Containers/Todos/index.todos'
 import UsersContainer from '../src/App/Containers/Users/index.users'
-
-//   <Link to='/'>Home</Link>
-// </li>
-// <li>
-//   <Link
-//     to={{
-//       pathname: '/new-post'
-//     }}
+import ProfileContainer from '../src/App/Containers/Profile/index.profile'
 
 const Routes = () => {
   return (
@@ -20,6 +13,7 @@ const Routes = () => {
       <Route path="/Posts" exact component={PostContainer} />
       <Route path="/Todos" exact component={TodosContainer} />
       <Route path="/Users" exact component={UsersContainer} />
+      <Route path="/Profile" exact component={ProfileContainer} />
     </Switch>
   )
 }

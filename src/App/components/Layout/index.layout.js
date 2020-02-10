@@ -6,9 +6,11 @@ import FooterModule from './Footer'
 const Layout = ({ children }) => {
   return (
     <React.Fragment>
-      <HeaderModule />
-      {children}
-      <FooterModule />
+      <div>
+        <HeaderModule />
+        {children}
+        <FooterModule />
+      </div>
     </React.Fragment>
   )
 }
