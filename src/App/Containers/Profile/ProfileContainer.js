@@ -38,6 +38,8 @@ class ProfileContainer extends Component {
     })
   }
   OnSubmitButton = (event) => {
+    const { InputForm, inputFormData } = this.props
+    InputForm()
     this.setState({
       isDataAvaliable: true,
       fullname: this.state.name,
@@ -90,7 +92,6 @@ class ProfileContainer extends Component {
       countryValue,
       dateValue
     } = this.state
-    // console.log(profileName, 'profleName')
 
     return (
       <ProfileModule

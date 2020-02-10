@@ -11,25 +11,42 @@ class TodosContainer extends Component {
     result: [],
     filteredtodoResult: []
   }
+
+  //Before redux
+
+  // fetchDatas = (state) => {
+  //   let url
+  //   url = 'https://jsonplaceholder.typicode.com/todos'
+
+  //   fetch(url)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       let slicedDataa = []
+  //       slicedDataa = data.slice(0, 30)
+  //       this.setState({
+  //         slicedData: slicedDataa,
+  //         filteredtodoResult: slicedDataa
+  //       })
+  //     })
+  // }
   componentDidMount() {
-    this.fetchDatas()
+    const { fetchDatas, items } = this.props
+
+    console.log(items, 'itemssss')
+    fetchDatas()
+    this.structuredData(items)
   }
 
-  fetchDatas = () => {
-    let url
-    url = 'https://jsonplaceholder.typicode.com/todos'
-
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        let slicedDataa = []
-        slicedDataa = data.slice(0, 30)
-        this.setState({
-          slicedData: slicedDataa,
-          filteredtodoResult: slicedDataa
-        })
-      })
+  structuredData = (items) => {
+    let slicedDataa = []
+    slicedDataa = items.slice(0, 30)
+    console.log(slicedDataa, 'data')
+    this.setState({
+      slicedData: slicedDataa,
+      filteredtodoResult: slicedDataa
+    })
   }
+
   SearchData = () => {
     // eslint-disable-next-line
     const { filteredPostResult, slicedData, searchString } = this.state
@@ -82,4 +99,5 @@ class TodosContainer extends Component {
     )
   }
 }
+
 export default TodosContainer
