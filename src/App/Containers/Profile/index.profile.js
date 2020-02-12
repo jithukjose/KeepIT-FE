@@ -1,14 +1,13 @@
 import ProfileContainer from '../Profile/ProfileContainer'
 import { connect } from 'react-redux'
+// import { fetchDatas } from './dux'
 
-import { FormInput } from './dux'
-
-const mapStateToProps = (state) => ({
-  inputFormData: state.ToDoReducer.inputFormData
-})
-
+////onAddTodo  ===>onProfile
 const mapDispatchToProps = {
-  FormInput
+  // fetchDat
 }
+// const mapStateToProps = (state) => ({
+//   items: state.ToDoReducer.items
+// })
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainer)
+export default connect(null, mapDispatchToProps)(ProfileContainer)

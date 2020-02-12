@@ -1,22 +1,45 @@
 import React, { Component } from 'react'
+// import { connect } from 'react-redux'
 
 import CardModule from '../../components/Card/index.card'
 import SearchModule from '../../components/Search/index.search'
 
-class PostContainer extends Component {
+class PostContainer extends React.PureComponent {
   state = {
     postData: [],
     result: '',
     slicedData: [],
-    isModalOpen: false,
     filteredPostResult: []
   }
-  // };
 
   componentDidMount() {
-    this.fetchDatas()
-    // this.KeyPressHandler()
+    const { fetchPostData, postDatas } = this.props
+    fetchPostData()
+
+    // this.structuredData(postDatas)
   }
+
+  structuredData = (postDatas) => {
+    let slicedDataa = []
+    slicedDataa = postDatas.slice(0, 30)
+    this.setState({
+      slicedData: slicedDataa,
+      filteredPostResult: slicedDataa
+    })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { fetchPostData, postDatas } = this.props
+    // fetchPostData()
+    console.log(nextProps, 'prop')
+
+    if (nextProps.postDatas !== postDatas) this.structuredData(nextProps.postDatas)
+    // this.structuredData(postDatas)
+  }
+
+  // componentDidMount() {
+  //   this.fetchDatas()
+  // this.KeyPressHandler()
 
   // fetchData = (searchString) => {
   //   let url
@@ -33,35 +56,42 @@ class PostContainer extends Component {
   //       // this.setState(() => ({ slicedData}))   same as above line
   //     })
   // }
-  fetchDatas = () => {
-    let url
-    url = 'https://jsonplaceholder.typicode.com/posts'
+  // fetchDatas = () => {
+  //   let url
+  //   url = 'https://jsonplaceholder.typicode.com/posts'
 
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        let slicedPostData = []
-        slicedPostData = data.slice(0, 30)
-        this.setState({
-          slicedData: slicedPostData,
-          filteredPostResult: slicedPostData
-        })
-      })
-  }
+  //   fetch(url)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       let slicedPostData = []
+  //       slicedPostData = data.slice(0, 30)
+  //       this.setState({
+  //         slicedData: slicedPostData,
+  //         filteredPostResult: slicedPostData
+  //       })
+  //     })
+  // }
   SearchData = () => {
     // eslint-disable-next-line
-    const { filteredPostResult, slicedData, searchString } = this.state
+    const { filteredPostResult, slicedData } = this.state
+    const { searchString } = this.props
+
     let filteredResults = []
     filteredResults = slicedData.filter((item) =>
       item.title.toLowerCase().match(searchString.toLowerCase())
     )
+
     this.setState({ filteredPostResult: filteredResults })
   }
+  //
+  // SearchHandler = (e) => {
+  // this.setState({
+  //   searchString: e.target.value
+  // })
 
   SearchHandler = (e) => {
-    this.setState({
-      searchString: e.target.value
-    })
+    const { duxSearchHandler } = this.props
+    duxSearchHandler(e)
   }
 
   KeyPressHandler = (e) => {
@@ -87,6 +117,7 @@ class PostContainer extends Component {
 
   render() {
     const { filteredPostResult } = this.state
+    const { postDatas } = this.props
 
     return (
       <>
