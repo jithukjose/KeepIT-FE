@@ -11,7 +11,7 @@ const CardModule = ({ slicedData, onModalClick, onDeleteClick }) => {
         <Button
           style={{ float: 'left', margin: '10px' }}
           color="secondary"
-          // onClick={() => onModalClick()}
+          onClick={() => onModalClick()}
         >
           Details
         </Button>

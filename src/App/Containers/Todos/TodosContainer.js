@@ -30,16 +30,18 @@ class TodosContainer extends Component {
   //     })
   // }
   componentDidMount() {
-    const { fetchDatas, items } = this.props
-
-    console.log(items, 'itemssss')
-    fetchDatas()
-    this.structuredData(items)
+    const { fetchTodosData } = this.props
+    fetchTodosData()
+  }
+  componentWillReceiveProps(nextProps) {
+    const { todoData } = this.props
+    console.log(nextProps, 'prop')
+    if (nextProps.todoData !== todoData) this.structuredData(nextProps.todoData)
   }
 
-  structuredData = (items) => {
+  structuredData = (todoData) => {
     let slicedDataa = []
-    slicedDataa = items.slice(0, 30)
+    slicedDataa = todoData.slice(0, 30)
     console.log(slicedDataa, 'data')
     this.setState({
       slicedData: slicedDataa,
