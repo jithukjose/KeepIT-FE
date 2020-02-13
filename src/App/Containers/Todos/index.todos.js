@@ -1,13 +1,13 @@
 import TodosContainer from '../Todos/TodosContainer'
 import { connect } from 'react-redux'
 
-import { fetchDatas } from './dux'
+import { fetchTodosData } from './dux'
 
 const mapStateToProps = (state) => ({
-  items: state.ToDoReducer.items
+  todoData: state.ToDoReducer.todoData
 })
 
 const mapDispatchToProps = {
-  fetchDatas
+  fetchTodosData
 }
 export default connect(mapStateToProps, mapDispatchToProps)(TodosContainer)

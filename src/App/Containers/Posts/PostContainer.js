@@ -3,13 +3,15 @@ import React, { Component } from 'react'
 
 import CardModule from '../../components/Card/index.card'
 import SearchModule from '../../components/Search/index.search'
+import ModalModule from '../../components/Modal/Modal'
 
 class PostContainer extends React.PureComponent {
   state = {
     postData: [],
     result: '',
     slicedData: [],
-    filteredPostResult: []
+    filteredPostResult: [],
+    isModalButtonClicked: false
   }
 
   componentDidMount() {
@@ -83,6 +85,7 @@ class PostContainer extends React.PureComponent {
 
     this.setState({ filteredPostResult: filteredResults })
   }
+
   //
   // SearchHandler = (e) => {
   // this.setState({
@@ -114,20 +117,35 @@ class PostContainer extends React.PureComponent {
       filteredPostResult: deletedData
     })
   }
+  onModalClick = () => {
+    console.log('here')
+
+    this.setState((prevState) => ({
+      isModalButtonClicked: !prevState.isModalButtonClicked
+    }))
+  }
 
   render() {
-    const { filteredPostResult } = this.state
+    const { filteredPostResult, isModalButtonClicked } = this.state
     const { postDatas } = this.props
 
     return (
       <>
         <SearchModule
-          searchHandler={this.SearchHandler}
+          searchHanhdler={this.SearchHandler}
           onSearchBtnClick={this.onSearchBtnClick}
           keyPressHandler={this.KeyPressHandler}
           onScreenEnterKey={this.OnScreenEnterKey}
         ></SearchModule>
-        <CardModule slicedData={filteredPostResult} onDeleteClick={this.OnDeleteClick}></CardModule>
+        <CardModule
+          slicedData={filteredPostResult}
+          onDeleteClick={this.OnDeleteClick}
+          onModalClick={this.onModalClick}
+        ></CardModule>
+        <ModalModule
+          onModalClick={this.onModalClick}
+          isModalButtonClicked={isModalButtonClicked}
+        ></ModalModule>
       </>
     )
   }

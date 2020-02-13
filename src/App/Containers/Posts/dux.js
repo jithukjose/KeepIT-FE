@@ -1,3 +1,4 @@
+//action types/types
 const GET_ALL_POSTS_START = 'POSTS/GET_ALL_POSTS_START'
 const GET_ALL_POSTS_SUCCESS = 'POSTS/GET_ALL_POSTS_SUCCESS'
 const GET_ALL_POSTS_FAIL = 'POSTS/GET_ALL_POSTS_FAIL'
@@ -13,7 +14,7 @@ export const fetchPostData = () => async (dispatch) => {
     const postData = await response.json()
     dispatch(getPostSuccess(postData))
 
-    // dispatch({ type: GET_ALL_POSTS_SUCCESS, payload: data })
+    //22 or dispatch({ type: GET_ALL_POSTS_SUCCESS, payload: data })
   } catch (error) {
     dispatch({ type: GET_ALL_POSTS_FAIL })
   }
