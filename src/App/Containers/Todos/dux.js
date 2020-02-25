@@ -33,7 +33,7 @@ export const fetchTodosData = () => async (dispatch) => {
   dispatch({ type: GET_ALL_TODOS_START })
 
   try {
-    const response = await fetch('https://jsonplaceholder.typicode.com/todos')
+    const response = await fetch('http://localhost:5000/api/todos')
     const todoData = await response.json()
     dispatch(getPostSuccess(todoData))
 

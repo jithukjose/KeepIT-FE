@@ -2,11 +2,15 @@ import React, { Component } from 'react'
 
 import SearchModule from '../../components/Search/index.search'
 import UsersTableModule from '../Users/TableUsers'
+import ModalModule from './ModalUsers'
+import { Button } from 'reactstrap'
 
 class UsersContainer extends Component {
   state = {
     userData: [],
-    slicedData: []
+    slicedData: [],
+    isModalButtonClicked: false,
+    data: []
   }
 
   componentDidMount() {
@@ -32,18 +36,24 @@ class UsersContainer extends Component {
 
   fetchDatas = () => {
     let url
-    url = 'https://jsonplaceholder.typicode.com/users'
+    // url = 'https://jsonplaceholder.typicode.com/users'
+
+    url = 'http://localhost:5000/api/users'
 
     fetch(url)
-      .then((response) => response.json())
+      .then((response) => {
+        return response.json()
+      })
       .then((data) => {
+        console.log(data, 'data')
         let slicedDataa = []
-        slicedDataa = data.slice(0, 30)
+        slicedDataa = data.slice(0, 100)
         this.setState({
           slicedData: slicedDataa
         })
       })
   }
+
   KeyPressHandler = (e) => {
     if (e.keyCode === 13) {
     }
@@ -54,14 +64,58 @@ class UsersContainer extends Component {
       searchString: e.target.value
     })
   }
+
   OnScreenEnterKey = (e) => {}
 
   onSearchBtnClick = () => {
     const { searchString } = this.state
     this.fetchData(searchString)
   }
+
+  addUserButtonClick = () => {
+    this.setState((prevState) => ({
+      isModalButtonClicked: !prevState.isModalButtonClicked
+    }))
+  }
+
+  onChangeHandler = (event) => {
+    let value = event.target.value
+    let fieldName = event.target.name
+    this.setState({
+      [fieldName]: value //this value will assign to this respective fieldname
+    })
+  }
+  onModalSubmit = () => {
+    let personalData = {
+      name: this.state.name,
+      email: this.state.email,
+      street: this.state.street,
+      city: this.state.city
+    }
+
+    fetch('http://localhost:5000/api/users', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(personalData)
+    })
+      .then(() => {
+        // this.setState((prevState) => ({
+        //   isModalButtonClicked: !prevState.isModalButtonClicked
+        // }))
+        this.addUserButtonClick()
+        this.fetchDatas()
+      })
+      .catch(function(e) {
+        alert('Error submitting form!')
+      })
+  }
+
   render() {
-    const { slicedData, searchString } = this.state
+    const { slicedData, searchString, isModalButtonClicked } = this.state
+
     const filteredResult = slicedData.filter((item) =>
       item.name.toLowerCase().match(searchString.toLowerCase())
     )
@@ -73,7 +127,20 @@ class UsersContainer extends Component {
           keyPressHandler={this.KeyPressHandler}
           onScreenEnterKey={this.OnScreenEnterKey}
         />
+        <Button
+          color="primary"
+          style={{ float: 'right', paddingLeft: '30px' }}
+          onClick={this.addUserButtonClick}
+        >
+          Add User
+        </Button>
         <UsersTableModule userDatas={filteredResult}></UsersTableModule>
+        <ModalModule
+          addUserButtonClicked={this.addUserButtonClick}
+          isModalButtonClicked={isModalButtonClicked}
+          onModalSubmit={this.onModalSubmit}
+          onChangeHandler={this.onChangeHandler}
+        ></ModalModule>
       </div>
     )
   }

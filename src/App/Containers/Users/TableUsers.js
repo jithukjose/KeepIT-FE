@@ -9,7 +9,8 @@ const UsersTableModule = ({ userDatas }) => {
       <td>{singleDatas.id}</td>
       <td>{singleDatas.name}</td>
       <td>{singleDatas.email}</td>
-      <td>{singleDatas.address && singleDatas.address.city}</td>
+      <td>{singleDatas.street}</td>
+      <td>{singleDatas.city}</td>
     </tr>
   ))
   return (
@@ -20,6 +21,7 @@ const UsersTableModule = ({ userDatas }) => {
             <th>User ID</th>
             <th>Name</th>
             <th>Email ID</th>
+            <th>Street</th>
             <th>City</th>
           </tr>
         </thead>
