@@ -9,7 +9,7 @@ export const fetchPostData = () => async (dispatch) => {
   dispatch({ type: GET_ALL_POSTS_START })
 
   try {
-    const response = await fetch('https://jsonplaceholder.typicode.com/posts')
+    const response = await fetch('http://localhost:5000/api/posts')
     console.log(response, 'sad')
     const postData = await response.json()
     dispatch(getPostSuccess(postData))

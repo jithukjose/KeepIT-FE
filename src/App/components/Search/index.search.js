@@ -13,7 +13,7 @@ const SearchModule = ({
     <div
       style={{
         width: '900px',
-        margin: '80px',
+        margin: '50px',
         border: '3px solid	#00289e'
       }}
     >

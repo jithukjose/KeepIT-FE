@@ -118,6 +118,7 @@ class PostContainer extends React.PureComponent {
     })
   }
   onModalClick = () => {
+    alert('clicked!!!')
     console.log('here')
 
     this.setState((prevState) => ({
@@ -132,7 +133,7 @@ class PostContainer extends React.PureComponent {
     return (
       <>
         <SearchModule
-          searchHanhdler={this.SearchHandler}
+          searchHandler={this.SearchHandler}
           onSearchBtnClick={this.onSearchBtnClick}
           keyPressHandler={this.KeyPressHandler}
           onScreenEnterKey={this.OnScreenEnterKey}
