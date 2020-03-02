@@ -5,14 +5,14 @@ export default [
   },
   {
     menuName: 'Users',
-    Url: '/Users'
+    Url: '/users'
   },
   {
     menuName: 'Todos',
-    Url: '/Todos'
+    Url: '/todos'
   },
   {
     menuName: 'Profile',
-    Url: '/Profile'
+    Url: '/profile'
   }
 ]

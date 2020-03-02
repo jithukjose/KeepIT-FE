@@ -127,13 +127,11 @@ class UsersContainer extends Component {
           keyPressHandler={this.KeyPressHandler}
           onScreenEnterKey={this.OnScreenEnterKey}
         />
-        <Button
-          color="primary"
-          style={{ float: 'right', paddingLeft: '30px' }}
-          onClick={this.addUserButtonClick}
-        >
-          Add User
-        </Button>
+        <div style={{ float: 'right', paddingright: '100px' }}>
+          <Button color="primary" style={{}} onClick={this.addUserButtonClick}>
+            Add User
+          </Button>
+        </div>
         <UsersTableModule userDatas={filteredResult}></UsersTableModule>
         <ModalModule
           addUserButtonClicked={this.addUserButtonClick}
