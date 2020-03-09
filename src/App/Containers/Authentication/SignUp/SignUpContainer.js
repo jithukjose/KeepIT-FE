@@ -1,73 +1,69 @@
 import React from 'react'
-
 import SignUpModule from './SignUp'
+import { Redirect } from 'react-router';
+
 
 
 class SignUpContainer extends React.PureComponent {
-    // state = {
-    // }
+    state = {
+        redirect: false
+    }
 
-    onModalSubmit = () => {
+    onChangeloginHandler = (event) => {
+        let value = event.target.value
+        let fieldName = event.target.name
+
+        this.setState({
+            [fieldName]: value //this value will assign to this respective fieldname
+        })
+    }
+
+    onSubmitBtnClick = () => {
+
+
         let personalData = {
             name: this.state.name,
             email: this.state.email,
             street: this.state.street,
-            city: this.state.city
+            city: this.state.city,
+            password: this.state.password
         }
 
-        fetch('http://localhost:5000/api/users', {
+        fetch('http://localhost:5000/api/signup', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
+
             },
-            body: JSON.stringify()
+            body: JSON.stringify(personalData)
+
+
+        }
+        ).then((result) => {
+            this.setState({ redirect: true })
+
         })
             .catch(function (e) {
                 alert('Error submitting form!')
             })
     }
 
-    //    return fetch('https://mywebsite.com/endpoint/', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     firstParam: 'yourValue',
-    //     secondParam: 'yourOtherValue',
-    //   })
-    // })
-
-
-    validateEmail = (e) => {
-
-        const emailRex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        const { validate } = this.state
-        if (emailRex.test(e.target.value)) {
-            validate.emailState = 'has-success'
-            let valid = this.state.validate.emailState === 'has-success'
-            console.log(valid, 'here')
-
-        } else {
-            validate.emailState = 'has-danger'
-            let invalid = this.state.validate.emailState === 'has-danger'
-        }
-        this.setState({ validate })
-    }
-
-
     render() {
-        // const { filteredPostResult, isModalButtonClicked } = this.state
-        // const { postDatas } = this.props
-        // const { valid }
+
+        const { redirect } = this.state;
+
+        if (redirect) {
+            return <Redirect to='/login' />
+        }
+
 
         return (
             <>
                 <SignUpModule
-                    validateEmail={this.validateEmail}
-                    valid={this.valid}
+                    onSubmitBtnClick={this.onSubmitBtnClick}
+                    onChangeloginHandler={this.onChangeloginHandler}
+
                 ></SignUpModule>
             </>
         )

@@ -5,88 +5,54 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import {
     Container, Col, Form,
     FormGroup, Label, Input,
-    Button, Jumbotron, Row, FormFeedback
+    Button, Jumbotron, Row
 } from 'reactstrap';
 
 
 const LoginModule = ({
-    validateEmail,
+    // validateEmail,
     valid,
-    profileName, index, profilEmail, profilStreet, profilCity, onChangeHandler
+    onLoginSubmitBtn,
+    onChangeloginHandler, onSignupBtnClick
 
 }) => {
-    console.log("valid:", valid)
+
     return (
         <Container className="App">
-
-            <h2>Sign In</h2>
+            <h2>Login</h2>
             <Row className=" d-flex justify-content-center">
-
                 <Col lg="6">
                     <Jumbotron style={{ backgroundColor: "#2a335573" }}>
                         <Form className="form">
                             <h1 style={{ marginLeft: '40%' }}>Login!!</h1>
-                            <h6 style={{ marginLeft: '41%' }}>Welcome Back!!</h6>
+                            <h6 style={{ marginLeft: '41%' }}>Welcome !!</h6>
                             <Col>
                                 <FormGroup>
-                                    <Label for="name">Name</Label>
+                                    <Label>Email</Label>
                                     <Input
-                                        type="text"
-                                        name="name"
-                                        value={profileName}
-                                        placeholder="Name"
-                                        key={index}
-                                    // onChange={(e) => onChangeHandler(e)}
-                                    />
-                                    <Label for="name">Email</Label>
-                                    <Input
-                                        type="text"
+                                        type="email"
                                         name="email"
-                                        value={profilEmail}
-                                        placeholder="Email"
-                                        key={index}
-                                    // onChange={(e) => onChangeHandler(e)}
+                                        id="exampleEmail"
+                                        placeholder="Email!!"
+                                        onChange={(e) => onChangeloginHandler(e)}
                                     />
-
+                                </FormGroup>
+                            </Col>
+                            <Col>
+                                <FormGroup>
                                     <Label for="examplePassword">Password</Label>
                                     <Input
                                         type="password"
                                         name="password"
                                         id="examplePassword"
                                         placeholder="********"
-                                    />
-                                    <Label for="examplePassword">Re Enter Password</Label>
-                                    <Input
-                                        type="password"
-                                        name="password"
-                                        id="examplePassword"
-                                        placeholder="********"
-                                    />
-
-
-                                    <Label for="name">Street</Label>
-                                    <Input
-                                        type="text"
-                                        name="street"
-                                        value={profilStreet}
-                                        placeholder="Street"
-                                        key={index}
-                                    // onChange={(e) => onChangeHandler(e)}
-                                    />
-                                    <Label for="name">City</Label>
-                                    <Input
-                                        type="text"
-                                        name="city"
-                                        value={profilCity}
-                                        placeholder="City"
-                                        key={index}
-                                    // onChange={(e) => onChangeHandler(e)}
+                                        onChange={(e) => onChangeloginHandler(e)}
                                     />
                                 </FormGroup>
                             </Col>
-                            <Button style={{ marginLeft: '30%' }} color="primary" onChange={(e) => validateEmail(e)}>Submit</Button>
-                            <Row style={{ float: "right", marginRight: '30%' }} >
-                                <Button>Cancel</Button>
+                            <Button color="primary" onClick={() => onLoginSubmitBtn()} >Submit</Button>
+                            <Row style={{ float: "right" }} >
+                                <Button onClick={() => onSignupBtnClick()}>SignUp?</Button>
                             </Row>
                         </Form>
                     </Jumbotron>
@@ -95,6 +61,7 @@ const LoginModule = ({
         </Container >
     )
 }
+
 
 
 

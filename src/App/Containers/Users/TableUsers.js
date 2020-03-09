@@ -3,8 +3,7 @@ import React from 'react'
 import { Table } from 'reactstrap'
 
 const UsersTableModule = ({ userDatas }) => {
-  console.log(userDatas, 'd')
-  const renderRows = userDatas.map((singleDatas) => (
+  const renderRows = userDatas && userDatas.map((singleDatas) => (
     <tr>
       <td>{singleDatas.id}</td>
       <td>{singleDatas.name}</td>
@@ -29,6 +28,7 @@ const UsersTableModule = ({ userDatas }) => {
         <tbody>{renderRows}</tbody>
       </Table>
     </div>
+
   )
 }
 

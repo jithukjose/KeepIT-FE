@@ -38,41 +38,6 @@ class PostContainer extends React.PureComponent {
     if (nextProps.postDatas !== postDatas) this.structuredData(nextProps.postDatas)
     // this.structuredData(postDatas)
   }
-
-  // componentDidMount() {
-  //   this.fetchDatas()
-  // this.KeyPressHandler()
-
-  // fetchData = (searchString) => {
-  //   let url
-  //   url = 'https://jsonplaceholder.typicode.com/posts'
-
-  //   if (searchString) {
-  //     url = `${url}/${searchString}`
-  //   }
-  //   fetch(url)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       const slicedData = searchString ? [data] : data.slice(0, 20)
-  //       this.setState(() => ({ slicedData: slicedData }))
-  //       // this.setState(() => ({ slicedData}))   same as above line
-  //     })
-  // }
-  // fetchDatas = () => {
-  //   let url
-  //   url = 'https://jsonplaceholder.typicode.com/posts'
-
-  //   fetch(url)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       let slicedPostData = []
-  //       slicedPostData = data.slice(0, 30)
-  //       this.setState({
-  //         slicedData: slicedPostData,
-  //         filteredPostResult: slicedPostData
-  //       })
-  //     })
-  // }
   SearchData = () => {
     // eslint-disable-next-line
     const { filteredPostResult, slicedData } = this.state
@@ -85,12 +50,6 @@ class PostContainer extends React.PureComponent {
 
     this.setState({ filteredPostResult: filteredResults })
   }
-
-  //
-  // SearchHandler = (e) => {
-  // this.setState({
-  //   searchString: e.target.value
-  // })
 
   SearchHandler = (e) => {
     const { duxSearchHandler } = this.props
