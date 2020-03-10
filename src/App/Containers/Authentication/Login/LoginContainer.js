@@ -1,6 +1,6 @@
 import React from 'react'
 import LoginModule from '../Login/LoginPage'
-import { Redirect } from 'react-router-dom'
+import { isLogin } from '../../../../Helper/LocalStorage'
 
 
 class LoginContainer extends React.PureComponent {
@@ -11,8 +11,12 @@ class LoginContainer extends React.PureComponent {
         redirectFromLogin: false
     }
 
-
-
+    componentDidMount() {
+        const { history } = this.props
+        if (isLogin()) {
+            history.push('/posts')
+        }
+    }
 
     onChangeloginHandler = (event) => {
         let value = event.target.value
@@ -23,68 +27,46 @@ class LoginContainer extends React.PureComponent {
         })
     }
 
-    onLoginSubmitBtn = (e) => {
+    onLoginSubmitBtn = async (e) => {
 
-        this.setState({
-            login: {
+        const TOKEN_KEY = 'jwt'
+        const { history } = this.props
+        try {
+            const response = await fetch("http://localhost:5000/api/login", {
+                method: 'POST',
+                headers: {
 
-                email: this.state.email,
-                password: this.state.password
-            }
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
 
-        })
+                },
+                body: JSON.stringify({
+                    email: this.state.email,
+                    password: this.state.password
+                })
 
-        const TOKEN_KEY = 'jwt';
-
-
-        fetch("http://localhost:5000/api/login", {
-            method: 'POST',
-            headers: {
-
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-
-            },
-            body: JSON.stringify({
-                email: this.state.email,
-                password: this.state.password
             })
 
-        })
-            .then(res => res.json()
-
-            ).then(this.setState({ redirectFromLogin: true }))
-            .then((result) => {
-                if (result && result.error) {
-                    console.log("errorrrr!!")
-                }
-                else {
-                    localStorage.setItem(TOKEN_KEY, result.token);
-                    this.setState({
-                        isLogin: true
-                    })
-                }
-
-            },
-
-                (error) => {
-                    console.log("error")
-                }
-            )
+            const data = await response.json()
+            if (data) {
+                localStorage.setItem(TOKEN_KEY, data.token);
+                history.push('/posts')
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
+
+
     onSignupBtnClick = () => {
-        this.setState({ redirect: true });
+        const { history } = this.props
+        history.push('/signup')
     }
+
+
 
     render() {
-        const { redirect, redirectFromLogin } = this.state;
 
-        if (redirect) {
-            return < Redirect to="/signup" />
-        }
-        if (redirectFromLogin) {
-            return <Redirect to="/posts" />
-        }
 
         return (
             <>

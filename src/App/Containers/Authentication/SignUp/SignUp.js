@@ -7,20 +7,16 @@ import {
     Button, Jumbotron, Row,
 } from 'reactstrap';
 
-
 const SignUpModule = ({
     validateEmail,
     valid,
-    profileName, index, profilEmail, profilStreet, profilCity, onSubmitBtnClick, onChangeloginHandler
+    profileName, index, profilEmail, profilStreet, profilCity, onSubmitBtnClick, onChangeloginHandler, onLoginBtnClick
 
 }) => {
     console.log("valid:", valid)
     return (
         <Container className="App">
-
-            <h2>Sign In</h2>
             <Row className=" d-flex justify-content-center">
-
                 <Col lg="6">
                     <Jumbotron style={{ backgroundColor: "#2a335573" }}>
                         <Form className="form">
@@ -88,7 +84,7 @@ const SignUpModule = ({
                             <Button style={{ marginLeft: '30%' }} color="primary" onClick={() => onSubmitBtnClick()}>Submit</Button>
 
                             <Row style={{ float: "right", marginRight: '30%' }} >
-                                <Button>Cancel</Button>
+                                <Button onClick={() => onLoginBtnClick()}> Login?</Button>
                             </Row>
                         </Form>
                     </Jumbotron>
@@ -97,8 +93,6 @@ const SignUpModule = ({
         </Container >
     )
 }
-
-
 
 export default SignUpModule;
 

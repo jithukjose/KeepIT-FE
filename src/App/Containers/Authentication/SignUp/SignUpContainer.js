@@ -1,6 +1,7 @@
 import React from 'react'
 import SignUpModule from './SignUp'
 import { Redirect } from 'react-router';
+import { isLogin } from '../../../../Helper/LocalStorage';
 
 
 
@@ -17,6 +18,14 @@ class SignUpContainer extends React.PureComponent {
             [fieldName]: value //this value will assign to this respective fieldname
         })
     }
+
+    componentDidMount() {
+        const { history } = this.props
+        if (isLogin()) {
+            history.push('/posts')
+        }
+    }
+
 
     onSubmitBtnClick = () => {
 
@@ -49,6 +58,11 @@ class SignUpContainer extends React.PureComponent {
             })
     }
 
+    onLoginBtnClick = () => {
+        const { history } = this.props
+        history.push('/login')
+    }
+
     render() {
 
         const { redirect } = this.state;
@@ -63,6 +77,7 @@ class SignUpContainer extends React.PureComponent {
                 <SignUpModule
                     onSubmitBtnClick={this.onSubmitBtnClick}
                     onChangeloginHandler={this.onChangeloginHandler}
+                    onLoginBtnClick={this.onLoginBtnClick}
 
                 ></SignUpModule>
             </>

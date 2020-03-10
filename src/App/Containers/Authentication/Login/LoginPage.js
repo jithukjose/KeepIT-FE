@@ -19,8 +19,7 @@ const LoginModule = ({
 
     return (
         <Container className="App">
-            <h2>Login</h2>
-            <Row className=" d-flex justify-content-center">
+            <Row style={{ paddingTop: '6rem' }} className=" d-flex justify-content-center">
                 <Col lg="6">
                     <Jumbotron style={{ backgroundColor: "#2a335573" }}>
                         <Form className="form">

@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import SearchModule from '../../components/Search/index.search'
 import UsersTableModule from '../Users/TableUsers'
-// import ModalModule from './ModalUsers'
-// import { Button } from 'reactstrap'
 
 import Pagination from "react-js-pagination"
-// require("bootstrap/less/bootstrap.less");
+
 
 class UsersContainer extends Component {
   state = {
@@ -20,13 +18,8 @@ class UsersContainer extends Component {
 
   componentDidMount() {
     const params = this.getURLParams(window.location)
-
-    console.log(params, 'params')
-    // this.setState({ searchString: params.search }, () =>
-
-    this.fetchDatas()
-    // )
-
+    // const { fetchUserData } = this.props
+    this.fetchUserData()
   }
 
   //sent Query Paremeters along with URl
@@ -47,7 +40,8 @@ class UsersContainer extends Component {
   }
 
   //Fetch Data from API
-  fetchDatas = async () => {
+  fetchUserData = async () => {
+    // const { userData } = this.props
     const TOKEN_KEY = 'jwt';
     const token = localStorage.getItem(TOKEN_KEY)
 
@@ -70,8 +64,7 @@ class UsersContainer extends Component {
     console.log(userDataRecord, "sliceddata")
     this.setState({
       slicedData: userDataRecord
-    }, () =>
-      console.log(this.state.slicedData, "final"))
+    })
   }
 
   KeyPressHandler = (e) => {
@@ -97,24 +90,24 @@ class UsersContainer extends Component {
     )
     this.setState({
       filteredResult
-    }, () => this.fetchDatas())
+    }, () => this.fetchUserData())
   }
 
 
   //Pagination function, Push page number into the URL as a query params
   handlePageChange = (pageNumber) => {
-    console.log(`active page is ${pageNumber}`);
+    console.log(pageNumber, 'numbers')
+
+    this.props.history.push({
+      pathname: '/users',
+      search: `pagenumber=${pageNumber}`
+    })
     this.setState({
       activePage: pageNumber
-    }, () =>
-      this.props.history.push({
-        pathname: '/users',
-        search: `PageNumber=${this.state.activePage}`
-      }),
-      this.fetchDatas(),
-    )
+    }, () => {
+      this.fetchUserData()
+    })
   }
-
 
   //add user to user table function
   addUserButtonClick = () => {
@@ -133,7 +126,7 @@ class UsersContainer extends Component {
 
 
   render() {
-    const { slicedData, activePage, searchString, isModalButtonClicked, filteredResult } = this.state
+    const { slicedData, activePage, filteredResult } = this.state
     return (
       <div>
         <SearchModule
@@ -156,7 +149,6 @@ class UsersContainer extends Component {
             pageRangeDisplayed={10}
             onChange={this.handlePageChange}
           />
-
 
         </div>
 

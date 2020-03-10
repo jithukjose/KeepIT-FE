@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 // import { connect } from 'react-redux'
 
 import CardModule from '../../components/Card/index.card'
@@ -15,7 +15,7 @@ class PostContainer extends React.PureComponent {
   }
 
   componentDidMount() {
-    const { fetchPostData, postDatas } = this.props
+    const { fetchPostData } = this.props
     fetchPostData()
 
     // this.structuredData(postDatas)
@@ -31,7 +31,7 @@ class PostContainer extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { fetchPostData, postDatas } = this.props
+    const { postDatas } = this.props
     // fetchPostData()
     console.log(nextProps, 'prop')
 
@@ -40,7 +40,7 @@ class PostContainer extends React.PureComponent {
   }
   SearchData = () => {
     // eslint-disable-next-line
-    const { filteredPostResult, slicedData } = this.state
+    const { slicedData } = this.state
     const { searchString } = this.props
 
     let filteredResults = []
@@ -87,7 +87,7 @@ class PostContainer extends React.PureComponent {
 
   render() {
     const { filteredPostResult, isModalButtonClicked } = this.state
-    const { postDatas } = this.props
+    // const { postDatas } = this.props
 
     return (
       <>

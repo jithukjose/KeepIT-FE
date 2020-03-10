@@ -57,6 +57,7 @@ export const fetchTodosData = () => async (dispatch) => {
 const getPostSuccess = (todoData) => ({
   type: GET_ALL_TODOS_SUCCESS,
   payload: todoData
+
 })
 
 const initialState = {

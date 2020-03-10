@@ -7,19 +7,19 @@ import UsersContainer from '../src/App/Containers/Users/index.users'
 import ProfileContainer from '../src/App/Containers/Profile/index.profile'
 import LoginContainer from './App/Containers/Authentication/Login/index.login'
 import SignUpContainer from './App/Containers/Authentication/SignUp/index.signup'
+import AuthLayout from './App/components/Layout/index.layout'
 
 import { isLogin } from "./Helper/LocalStorage"
 
-
-
-const PrivateRoute = ({ component: Component, ...rest }) => {
+const PrivateRoute = ({ component: Component, layout: Layout, ...rest }) => {
   return (
-
-    <Route {...rest} render={props => (
-      isLogin() ?
-        <Component {...props} />
-        : <Redirect to="/login" />
-    )} />
+    <Layout>
+      <Route {...rest} render={props => (
+        isLogin() ?
+          <Component {...props} />
+          : <Redirect to="/login" />
+      )} />
+    </Layout>
   );
 };
 
@@ -42,11 +42,10 @@ const Routes = () => {
     <Switch>
       <Route path="/login" restricted={true} exact component={LoginContainer} />
       <Route path="/signup" exact component={SignUpContainer} />
-      <PrivateRoute path="/posts" exact component={PostContainer} />
-      <PrivateRoute path="/todos" exact component={TodosContainer} />
-      <PrivateRoute path="/users" exact component={UsersContainer} />
-      <PrivateRoute path="/profile" exact component={ProfileContainer} />
-      {/* <Route path="/login" exact component={LoginContainer} /> */}
+      <PrivateRoute path="/posts" exact component={PostContainer} layout={AuthLayout} />
+      <PrivateRoute path="/todos" exact component={TodosContainer} layout={AuthLayout} />
+      <PrivateRoute path="/users" exact component={UsersContainer} layout={AuthLayout} />
+      <PrivateRoute path="/profile" exact component={ProfileContainer} layout={AuthLayout} />
     </Switch>
   )
 }

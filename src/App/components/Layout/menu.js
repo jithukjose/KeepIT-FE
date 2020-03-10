@@ -1,3 +1,4 @@
+
 export default [
   {
     menuName: 'Posts',
@@ -15,7 +16,8 @@ export default [
     menuName: 'Profile',
     Url: '/profile'
   },
-  {
-    menuNamelogout: 'Logout'
-  }
+  // {
+  //   menuName: 'SignOut',
+  //   Url: '/signout'
+  // }
 ]

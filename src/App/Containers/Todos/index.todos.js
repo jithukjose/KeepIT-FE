@@ -5,6 +5,7 @@ import { fetchTodosData } from './dux'
 
 const mapStateToProps = (state) => ({
   todoData: state.ToDoReducer.todoData
+
 })
 
 const mapDispatchToProps = {

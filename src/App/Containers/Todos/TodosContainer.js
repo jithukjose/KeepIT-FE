@@ -31,6 +31,7 @@ class TodosContainer extends Component {
   // }
   componentDidMount() {
     const { fetchTodosData } = this.props
+
     fetchTodosData()
   }
   componentWillReceiveProps(nextProps) {

@@ -47,8 +47,7 @@ class ProfileContainer extends Component {
       countryValue: this.state.country,
       dateValue: this.state.newDate
     })
-    let myName = this.state.name
-    let myAge = this.state.age
+
 
     this.setState({
       // profileName:

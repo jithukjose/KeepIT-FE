@@ -1,8 +1,7 @@
 import React from 'react'
 
 import HeaderModule from './Header'
-import FooterModule from './Footer'
-import { isLogin } from '../../../Helper/LocalStorage'
+
 
 const Layout = ({ children }) => {
   return (
@@ -13,7 +12,7 @@ const Layout = ({ children }) => {
       <div>
         <HeaderModule />
         {children}
-        <FooterModule />
+        {/* <FooterModule /> */}
       </div>
     </React.Fragment>
   )
