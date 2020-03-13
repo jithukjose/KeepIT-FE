@@ -48,8 +48,10 @@ class LoginContainer extends React.PureComponent {
             })
 
             const data = await response.json()
+
             if (data) {
                 localStorage.setItem(TOKEN_KEY, data.token);
+                localStorage.setItem('userId', data.id)
                 history.push('/posts')
             }
         } catch (error) {

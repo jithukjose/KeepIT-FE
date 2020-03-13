@@ -1,15 +1,15 @@
 import React from 'react'
 
-import { Card, CardTitle, CardText, Row, Button, Col } from 'reactstrap'
+import { Card, CardTitle, CardText, Button } from 'reactstrap'
+import classes from './card.module.css'
 
 const CardModule = ({ slicedData, onModalClick, onDeleteClick }) => {
   const renderPostCard = slicedData.map((singleDatas) => (
-    <Col xs="6" key={singleDatas.id}>
-      <Card body>
-        <CardTitle>{singleDatas.title}</CardTitle>
-        <CardText>{singleDatas.body}</CardText>
+    <Card body className={classes.card}>
+      <CardTitle>{singleDatas.title}</CardTitle>
+      <CardText>{singleDatas.body}</CardText>
+      <div className={classes.buttonblock}>
         <Button
-          style={{ float: 'left', margin: '10px' }}
           color="secondary"
           onClick={() => onModalClick()}
         >
@@ -17,16 +17,16 @@ const CardModule = ({ slicedData, onModalClick, onDeleteClick }) => {
         </Button>
         <Button
           color="danger"
-          style={{ float: 'left', margin: '10px' }}
           onClick={(e) => onDeleteClick(e, singleDatas.id)}
         >
           Delete
         </Button>
-      </Card>
-    </Col>
+      </div>
+    </Card>
+    // </Col>
   ))
 
-  return <Row>{renderPostCard}</Row>
+  return renderPostCard
 }
 
 export default CardModule

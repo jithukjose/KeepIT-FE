@@ -4,6 +4,7 @@ import React from 'react'
 import CardModule from '../../components/Card/index.card'
 import SearchModule from '../../components/Search/index.search'
 import ModalModule from '../../components/Modal/Modal'
+import classes from './posts.module.css'
 
 class PostContainer extends React.PureComponent {
   state = {
@@ -17,8 +18,6 @@ class PostContainer extends React.PureComponent {
   componentDidMount() {
     const { fetchPostData } = this.props
     fetchPostData()
-
-    // this.structuredData(postDatas)
   }
 
   structuredData = (postDatas) => {
@@ -32,14 +31,12 @@ class PostContainer extends React.PureComponent {
 
   componentWillReceiveProps(nextProps) {
     const { postDatas } = this.props
-    // fetchPostData()
-    console.log(nextProps, 'prop')
 
     if (nextProps.postDatas !== postDatas) this.structuredData(nextProps.postDatas)
-    // this.structuredData(postDatas)
+
   }
   SearchData = () => {
-    // eslint-disable-next-line
+
     const { slicedData } = this.state
     const { searchString } = this.props
 
@@ -87,26 +84,27 @@ class PostContainer extends React.PureComponent {
 
   render() {
     const { filteredPostResult, isModalButtonClicked } = this.state
-    // const { postDatas } = this.props
 
     return (
-      <>
+      <div className={classes.postcontainer}>
         <SearchModule
           searchHandler={this.SearchHandler}
           onSearchBtnClick={this.onSearchBtnClick}
           keyPressHandler={this.KeyPressHandler}
           onScreenEnterKey={this.OnScreenEnterKey}
-        ></SearchModule>
-        <CardModule
-          slicedData={filteredPostResult}
-          onDeleteClick={this.OnDeleteClick}
-          onModalClick={this.onModalClick}
-        ></CardModule>
+        />
+        <div className={classes.cardcontainer}>
+          <CardModule
+            slicedData={filteredPostResult}
+            onDeleteClick={this.OnDeleteClick}
+            onModalClick={this.onModalClick}
+          />
+        </div>
         <ModalModule
           onModalClick={this.onModalClick}
           isModalButtonClicked={isModalButtonClicked}
-        ></ModalModule>
-      </>
+        />
+      </div>
     )
   }
 }

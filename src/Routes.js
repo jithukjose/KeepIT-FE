@@ -40,6 +40,7 @@ const PrivateRoute = ({ component: Component, layout: Layout, ...rest }) => {
 const Routes = () => {
   return (
     <Switch>
+      <Route path="/" exact component={LoginContainer} />
       <Route path="/login" restricted={true} exact component={LoginContainer} />
       <Route path="/signup" exact component={SignUpContainer} />
       <PrivateRoute path="/posts" exact component={PostContainer} layout={AuthLayout} />

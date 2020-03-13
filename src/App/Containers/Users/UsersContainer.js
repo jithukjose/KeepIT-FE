@@ -17,7 +17,7 @@ class UsersContainer extends Component {
   }
 
   componentDidMount() {
-    const params = this.getURLParams(window.location)
+    this.getURLParams(window.location)
     // const { fetchUserData } = this.props
     this.fetchUserData()
   }
@@ -26,15 +26,11 @@ class UsersContainer extends Component {
   getURLParams = () => {
     //Return the querystring valus of a URL.
     const query = new URLSearchParams(window.location.search)
-
-    console.log(query.get('PageNumber'), 'query')
     const searchParam = query.get('search')
-    const pageParam = query.get('PageNumber')
-    console.log(pageParam, 'newpageparams')
-
+    // const pageParam = query.get('PageNumber')
     const params = {
       search: searchParam,
-      activePage: pageParam
+      activePage: this.state.activePage
     }
     return params
   }
@@ -61,7 +57,6 @@ class UsersContainer extends Component {
     })
     const userData = await response.json()
     let userDataRecord = userData.records
-    console.log(userDataRecord, "sliceddata")
     this.setState({
       slicedData: userDataRecord
     })
@@ -96,8 +91,6 @@ class UsersContainer extends Component {
 
   //Pagination function, Push page number into the URL as a query params
   handlePageChange = (pageNumber) => {
-    console.log(pageNumber, 'numbers')
-
     this.props.history.push({
       pathname: '/users',
       search: `pagenumber=${pageNumber}`
@@ -140,7 +133,7 @@ class UsersContainer extends Component {
 
         </div>
         <UsersTableModule userDatas={filteredResult ? filteredResult : slicedData}></UsersTableModule>
-        <div style={{ paddingLeft: '40%', }}>
+        <div style={{ paddingLeft: '30%', fontWeight: '30%' }}>
           <Pagination
             style={{ padding: '20px' }}
             activePage={activePage}
@@ -148,6 +141,8 @@ class UsersContainer extends Component {
             totalItemsCount={450}
             pageRangeDisplayed={10}
             onChange={this.handlePageChange}
+            itemClass="page-item"
+            linkClass="page-link"
           />
 
         </div>

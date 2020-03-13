@@ -21,7 +21,7 @@ const SignUpModule = ({
                     <Jumbotron style={{ backgroundColor: "#2a335573" }}>
                         <Form className="form">
                             <h1 style={{ marginLeft: '40%' }}>SignUP!!</h1>
-                            <h6 style={{ marginLeft: '41%' }}>Welcome Back!!</h6>
+                            <h6 style={{ marginLeft: '43%' }}>Welcome Back!!</h6>
                             <Col>
                                 <FormGroup>
                                     <Label for="name">Name</Label>

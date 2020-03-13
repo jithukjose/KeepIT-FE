@@ -13,7 +13,7 @@ const UsersTableModule = ({ userDatas }) => {
     </tr>
   ))
   return (
-    <div style={{ width: '90%', padding: '10px', margin: '20px' }}>
+    <div style={{ width: '90%', padding: '10px', margin: '0px' }}>
       <Table dark striped hover>
         <thead>
           <tr>

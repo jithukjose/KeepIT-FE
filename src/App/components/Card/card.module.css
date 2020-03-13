@@ -1,0 +1,14 @@
+.buttonblock {
+    display: flex;
+    justify-content: space-between;
+}
+
+.buttonblock button {
+    padding: 0.5rem 2.2rem;
+}
+
+
+
+.card {
+    margin-bottom: 2rem;
+}

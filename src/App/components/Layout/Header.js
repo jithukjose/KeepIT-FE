@@ -18,6 +18,7 @@ const HeaderModule = ({ history }) => {
   const signOutClickHandler = (e) => {
     e.preventDefault()
     localStorage.removeItem('jwt')
+    localStorage.removeItem('userId')
     history.push('/login')
   }
 

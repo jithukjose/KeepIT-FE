@@ -1,123 +1,116 @@
 import React from 'react'
-import { Button, Label, Input, Alert } from 'reactstrap'
+import { Container } from 'reactstrap'
 // import DateSelector from '../../components/DatePicker/index.datepicker'
-import country from '../../../Helper/Country'
-import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
+// import country from '../../../Helper/Country'
+// import DatePicker from 'react-datepicker'
+// import 'react-datepicker/dist/react-datepicker.css'
 
 const ProfileModule = ({
-  onChangeHandler,
-  name,
-  age,
-  doB,
-  index,
-  profileName,
-  profileAge,
-  profileCountry,
-  profileDate,
-  startDate,
-  handleChangeForDate,
-  newDate,
-  OnSubmitButton,
-  OnEditButton,
-  getName,
-  isDataAvaliable,
-  proName,
-  proage,
-  procountry,
-  proDate
-}) => {
+  onEditChangeHandler, index, userProfileData, readOnlyMode, onEditProfileBtn, name, street, city, onSubmitProfileBtn }) => {
+  console.log('street', street)
   return (
     <>
-      <div style={{ background: '#D9DCD6', margin: '40px' }}>
-        <div style={{ margin: '40px', marginLeft: '300px', marginRight: '200px' }}>
-          <Label for="exampleEmail">Name</Label>
-          <Input
-            type="text"
-            name="name"
-            value={profileName}
-            placeholder="Name"
-            onChange={(e) => onChangeHandler(e)}
-            key={index}
-          />
-          <div>
-            <Label for="exampleEmail">Age</Label>
-            <Input
-              type="text"
-              name="age"
-              value={profileAge}
-              placeholder="Age"
-              onChange={(e) => onChangeHandler(e)}
-              key={index}
-            />
-          </div>
+      <Container style={{ paddingTop: '6rem' }}  >
+        <div className="container" >
+          <div className="row">
+            <div className="col-md-3 ">
+              <div className="list-group ">
+                <button className="list-group-item list-group-item-action active">Dashboard</button>
+              </div>
+            </div>
+            <div className="col-md-9">
+              <div className="card">
+                <div className="card-body">
+                  <div className="row">
 
-          <Label>Country</Label>
-          <Input
-            onChange={(e) => onChangeHandler(e)}
-            type="select"
-            name="country"
-            id="exampleSelect"
-          >
-            {country.map((country) => (
-              <option name="country" value={country.value}>
-                {country.countryName}
-              </option>
-            ))}
-          </Input>
+                    <div className="col-md-12">
+                      <h3>Your Profile
+                      <div class="btn btn-large btn btn-warning " style={{ float: 'right' }} onClick={(e) => onEditProfileBtn(e)} >
+                          <i class="fas fa-user-edit" ></i>
+                        </div>
+                      </h3>
+                      <div class="container">
+                      </div>
+                      <hr />
 
-          <div style={{ margin: '10px' }}>
-            <Label for="exampleEmail">Date of Birth</Label>
-            <br></br>
-            <DatePicker
-              selected={startDate}
-              onChange={(e) => handleChangeForDate(e)}
-              name="date"
-            ></DatePicker>
-          </div>
+                    </div>
 
-          <div style={{ margin: '0 auto', display: ' block' }}>
-            <Button
-              onClick={(e) => OnSubmitButton(e)}
-              color="secondary"
-              style={{ margin: '0 auto', display: ' block' }}
-            >
-              Submit
-            </Button>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <form>
+
+
+                        <div className="form-group row">
+                          <label for="Name" className="col-4 col-form-label">Name </label>
+                          <div className="col-8">
+                            <input id="Name" name="name"
+                              placeholder="Name" className="form-control here" type="text" onChange={(e) => onEditChangeHandler(e)}
+                              key={index}
+                              value={name}
+                              disabled={readOnlyMode}
+                            />
+                          </div>
+                        </div>
+                        <div className="form-group row">
+                          <label for="email" className="col-4 col-form-label">Email*</label>
+                          <div className="col-8">
+                            <input id="email" name="email" placeholder="Email" className="form-control here" value={userProfileData.email} required="required" type="text" onChange={(e) => onEditChangeHandler(e)}
+                              key={index}
+                              disabled={true}
+                            />
+                          </div>
+                        </div>
+
+                        <div className="form-group row">
+                          <label for="select" className="col-4 col-form-label">Display Name public as</label>
+                          <div className="col-8">
+                            <select id="select" name="select" className="custom-select">
+                              <option value="admin">Admin</option>
+                            </select>
+                          </div>
+                        </div>
+
+
+                        <div className="form-group row">
+                          <label for="website" className="col-4 col-form-label">Street</label>
+                          <div className="col-8">
+                            <input id="Street" name="street" placeholder="Street" className="form-control here" type="text" onChange={(e) => onEditChangeHandler(e)}
+                              key={index}
+                              disabled={readOnlyMode}
+                              value={street} />
+
+
+
+                          </div>
+
+                        </div>
+                        <div className="form-group row">
+                          <label for="City" className="col-4 col-form-label">City</label>
+                          <div className="col-8">
+                            <input id="City" name="city" placeholder="City" className="form-control here" type="text" onChange={(e) => onEditChangeHandler(e)}
+                              key={index}
+                              disabled={readOnlyMode}
+                              value={city} />
+                          </div>
+                        </div>
+
+                        <div className="form-group row">
+                          <div className="offset-4 col-8">
+                            <button name="submit" type="submit" onClick={(e) => onSubmitProfileBtn(e)} className="btn btn-primary" disabled={readOnlyMode} >Update My Profile</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+      </Container>
 
-        <div style={{ margin: '100px', marginLeft: '450px' }}>
-          <Label for="exampleEmail">Full Name:-</Label>
-          <Alert style={{ width: '50%' }} color="danger">
-            {`${isDataAvaliable ? proName : ''}`}
-          </Alert>
-          <Label for="exampleEmail">Age:-</Label>
-          <Alert style={{ width: '50%' }} color="danger">
-            {/* {profileAge} */}
-            {`${isDataAvaliable ? proage : ''}`}
-          </Alert>
-          <Label for="exampleEmail">Country:-</Label>
-          <Alert style={{ width: '50%' }} color="danger">
-            {/* {profileCountry} */}
-            {`${isDataAvaliable ? procountry : ''}`}
-          </Alert>
-          <Label for="exampleEmail">Date Of Birth:-</Label>
-          <Alert style={{ width: '50%' }} color="danger">
-            {/* {newDate} */}
-            {`${isDataAvaliable ? proDate : ''}`}
-          </Alert>
-          <div s>
-            <Button
-              onClick={(e) => OnEditButton(e)}
-              color="secondary"
-              style={{ margin: '0 auto', display: ' block' }}
-            >
-              Edit
-            </Button>
-          </div>
-        </div>
-      </div>
     </>
   )
 }
