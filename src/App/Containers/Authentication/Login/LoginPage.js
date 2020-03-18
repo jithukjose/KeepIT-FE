@@ -1,6 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
+import './login.css'
 
 import {
     Container, Col, Form,
@@ -18,49 +19,50 @@ const LoginModule = ({
 }) => {
 
     return (
-        <Container className="App">
-            <Row style={{ paddingTop: '6rem' }} className=" d-flex justify-content-center">
-                <Col lg="6">
-                    <Jumbotron style={{ backgroundColor: "#2a335573" }}>
-                        <Form className="form">
-                            <h1 style={{ marginLeft: '40%' }}>Login!!</h1>
-                            <h6 style={{ marginLeft: '43%' }}>Welcome !!</h6>
-                            <Col>
-                                <FormGroup>
-                                    <Label>Email</Label>
-                                    <Input
-                                        type="email"
-                                        name="email"
-                                        id="exampleEmail"
-                                        placeholder="Email!!"
-                                        onChange={(e) => onChangeloginHandler(e)}
-                                    />
-                                </FormGroup>
-                            </Col>
-                            <Col>
-                                <FormGroup>
-                                    <Label for="examplePassword">Password</Label>
-                                    <Input
-                                        type="password"
-                                        name="password"
-                                        id="examplePassword"
-                                        placeholder="********"
-                                        onChange={(e) => onChangeloginHandler(e)}
-                                    />
-                                </FormGroup>
-                            </Col>
-                            <Button color="primary" onClick={() => onLoginSubmitBtn()} >Submit</Button>
-                            <Row style={{ float: "right" }} >
-                                <Button onClick={() => onSignupBtnClick()}>SignUp?</Button>
-                            </Row>
-                        </Form>
-                    </Jumbotron>
-                </Col>
-            </Row>
-        </Container >
+
+        <body id="LoginForm">
+            <header></header>
+            <div className="container">
+
+                <div className="login-form">
+                    <div className="main-div">
+                        <div className="panel">
+                            <h2>Login</h2>
+                            <p>Please enter your email and password</p>
+                        </div>
+                        <form id="Login">
+                            <div className="form-group">
+                                <input type="email" className="form-control" id="inputEmail" placeholder="Email Address" name="email" onChange={(e) => onChangeloginHandler(e)} />
+
+                            </div>
+
+                            <div className="form-group">
+
+                                <input type="password" className="form-control" id="inputPassword" placeholder="Password" name="password" onChange={(e) => onChangeloginHandler(e)} />
+
+                            </div>
+                            <div className="forgot">
+                                <a >Forgot password?</a>
+                            </div>
+                            <button type="submit" onClick={(e) => onLoginSubmitBtn(e)} className="btn btn-primary">Login</button>
+
+
+                            <p >
+                                Not a member yet ?
+                             <a onClick={(e) => onSignupBtnClick(e)} href="#toregister" >Join us</a>
+                            </p>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+        </body >
+
+
     )
 }
-
 
 
 

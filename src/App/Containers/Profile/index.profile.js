@@ -5,9 +5,9 @@ import { fetchProfileData, postProfileData } from './dux'
 
 const mapStateToProps = (state) => ({
   userProfileData: state.ProfileReducer.userProfileData,
-  // postDataResponse: state.ProfileReducer.postDataResponse
 
 })
+
 const mapDispatchToProps = {
   fetchProfileData,
   postProfileData

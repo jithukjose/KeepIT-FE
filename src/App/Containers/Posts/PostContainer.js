@@ -31,6 +31,7 @@ class PostContainer extends React.PureComponent {
 
   componentWillReceiveProps(nextProps) {
     const { postDatas } = this.props
+    console.log(postDatas, 'posr')
 
     if (nextProps.postDatas !== postDatas) this.structuredData(nextProps.postDatas)
 
@@ -73,17 +74,26 @@ class PostContainer extends React.PureComponent {
       filteredPostResult: deletedData
     })
   }
-  onModalClick = () => {
-    alert('clicked!!!')
-    console.log('here')
+  onDetailClick = (e, id) => {
+
+    const { postDatas } = this.props
+
+    if (postDatas && id) {
+      const selectedItem = postDatas.filter((listItem) => listItem.id === id)
+      const postBody = selectedItem[0].body
+      this.setState({
+        selectedItem, postBody
+      })
+    }
 
     this.setState((prevState) => ({
-      isModalButtonClicked: !prevState.isModalButtonClicked
+      isModalButtonClicked: !prevState.isModalButtonClicked,
+
     }))
   }
 
   render() {
-    const { filteredPostResult, isModalButtonClicked } = this.state
+    const { filteredPostResult, isModalButtonClicked, postBody } = this.state
 
     return (
       <div className={classes.postcontainer}>
@@ -97,12 +107,13 @@ class PostContainer extends React.PureComponent {
           <CardModule
             slicedData={filteredPostResult}
             onDeleteClick={this.OnDeleteClick}
-            onModalClick={this.onModalClick}
+            onDetailClick={this.onDetailClick}
           />
         </div>
         <ModalModule
-          onModalClick={this.onModalClick}
+          onModalClick={this.onDetailClick}
           isModalButtonClicked={isModalButtonClicked}
+          postBody={postBody}
         />
       </div>
     )

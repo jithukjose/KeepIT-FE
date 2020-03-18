@@ -3,7 +3,7 @@ import React from 'react'
 import { Card, CardTitle, CardText, Button } from 'reactstrap'
 import classes from './card.module.css'
 
-const CardModule = ({ slicedData, onModalClick, onDeleteClick }) => {
+const CardModule = ({ slicedData, onDetailClick, onDeleteClick }) => {
   const renderPostCard = slicedData.map((singleDatas) => (
     <Card body className={classes.card}>
       <CardTitle>{singleDatas.title}</CardTitle>
@@ -11,7 +11,7 @@ const CardModule = ({ slicedData, onModalClick, onDeleteClick }) => {
       <div className={classes.buttonblock}>
         <Button
           color="secondary"
-          onClick={() => onModalClick()}
+          onClick={(e) => onDetailClick(e, singleDatas.id)}
         >
           Details
         </Button>

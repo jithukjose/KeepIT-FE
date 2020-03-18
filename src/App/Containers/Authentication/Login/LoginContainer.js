@@ -28,6 +28,7 @@ class LoginContainer extends React.PureComponent {
     }
 
     onLoginSubmitBtn = async (e) => {
+        e.preventDefault();
 
         const TOKEN_KEY = 'jwt'
         const { history } = this.props
@@ -49,7 +50,7 @@ class LoginContainer extends React.PureComponent {
 
             const data = await response.json()
 
-            if (data) {
+            if (data.id) {
                 localStorage.setItem(TOKEN_KEY, data.token);
                 localStorage.setItem('userId', data.id)
                 history.push('/posts')
@@ -60,25 +61,20 @@ class LoginContainer extends React.PureComponent {
     }
 
 
-    onSignupBtnClick = () => {
+    onSignupBtnClick = (e) => {
+        e.preventDefault()
         const { history } = this.props
         history.push('/signup')
     }
 
-
-
     render() {
-
-
         return (
             <>
                 <LoginModule
                     onLoginSubmitBtn={this.onLoginSubmitBtn}
                     onChangeloginHandler={this.onChangeloginHandler}
                     onSignupBtnClick={this.onSignupBtnClick}
-
                 />
-
             </>
         )
     }

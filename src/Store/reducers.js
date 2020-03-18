@@ -10,6 +10,5 @@ const rootreducer = combineReducers({
   PostsReducer,
   UserReducer,
   ProfileReducer
-
 })
 export default rootreducer

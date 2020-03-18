@@ -7,7 +7,8 @@ class ProfileContainer extends Component {
         readOnlyMode: true,
         name: '',
         street: '',
-        city: ''
+        city: '',
+
     }
 
     componentDidMount() {
@@ -16,20 +17,17 @@ class ProfileContainer extends Component {
     }
 
 
-    //edit profile field
     componentWillReceiveProps(nextProps) {
 
         const { userProfileData } = this.props
         if (nextProps.userProfileData !== userProfileData) {
-            const { name, street, city } = userProfileData
+            const { name, street, city } = nextProps.userProfileData
             this.setState({
                 name,
-                street,
-                city
+                street, city
             })
         }
     }
-
 
     onEditChangeHandler = (event) => {
         let value = event.target.value
@@ -45,9 +43,9 @@ class ProfileContainer extends Component {
         })
     }
 
-    onSubmitProfileBtn = (event) => {
-        const { postProfileData } = this.props
-        event.preventDefault();
+    onSubmitProfileBtn = async (event) => {
+        const { postProfileData, fetchProfileData, userProfileData } = this.props
+        // event.preventDefault();
         const changedData = {
             name: this.state.name,
             street: this.state.street,
@@ -55,15 +53,22 @@ class ProfileContainer extends Component {
             email: null
         }
 
-        postProfileData(changedData)
+        await postProfileData(changedData)
         this.setState({
             readOnlyMode: true,
+        })
+        fetchProfileData()
+        const { name, street, city } = userProfileData
+
+        this.setState({
+            name,
+            street, city
         })
     }
 
     render() {
-        const { readOnlyMode, name, street, city } = this.state
 
+        const { name, street, city, readOnlyMode } = this.state
         return (
             <ProfileModule
                 name={name}

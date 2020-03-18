@@ -13,7 +13,10 @@ class UsersContainer extends Component {
     data: [],
     currentPage: 0,
     searchString: '',
-    activePage: 1
+    activePage: 1,
+    rowClicked: false,
+    rowId: '',
+    singleDatas: ''
   }
 
   componentDidMount() {
@@ -57,8 +60,10 @@ class UsersContainer extends Component {
     })
     const userData = await response.json()
     let userDataRecord = userData.records
+
     this.setState({
-      slicedData: userDataRecord
+      slicedData: userDataRecord,
+      totalCount: userData.metaData.totalCount
     })
   }
 
@@ -85,7 +90,9 @@ class UsersContainer extends Component {
     )
     this.setState({
       filteredResult
-    }, () => this.fetchUserData())
+    }, () => this.fetchUserData()
+    )
+
   }
 
 
@@ -109,17 +116,80 @@ class UsersContainer extends Component {
     }))
   }
 
-  onChangeHandler = (event) => {
+  onEditChangeHandler = (event, id) => {
+    console.log(id, 'here')
+
     let value = event.target.value
     let fieldName = event.target.name
     this.setState({
-      [fieldName]: value //this value will assign to this respective fieldname
+      [fieldName]: value//this value will assign to this respective fieldname,
+
+
     })
+
+  }
+
+  // edit profile field
+  // componentWillReceiveProps(nextProps) {
+  //   console.log(nextProps, 'jit')
+  //   const data = {
+  //     name: this.state.name,
+  //     street: this.state.street,
+  //     city: this.state.city
+  //   }
+
+  //   // const { userProfileData } = this.props
+  //   if (nextProps.data !== data) {
+  //     // const { name, street, city } = userProfileData
+  //     this.setState({
+  //       name: this.state.name,
+  //       street: this.state.street, city: this.state.city
+  //     })
+  //   }
+  // }
+
+  onEditClickBtn = (data) => {
+
+    this.setState({
+      rowClicked: true,
+      rowId: data.id
+    })
+
+
+    // const TOKEN_KEY = 'jwt';
+    // const token = localStorage.getItem(TOKEN_KEY)
+    // const userIdFromLocalStorege = localStorage.getItem('userId')
+
+    // const response = await fetch(`http://localhost:5000/api/users/${userIdFromLocalStorege}`, {
+    //   method: 'PUT',
+    //   headers: {
+    //     Accept: 'application/json',
+    //     'Content-Type': 'application/json',
+    //     'Authorization': 'Bearer ' + token,
+    //   },
+    //   body: JSON.stringify(changedData)
+  }
+
+  onDeleteBtnClick = async (event, id) => {
+    const TOKEN_KEY = 'jwt';
+    const token = localStorage.getItem(TOKEN_KEY)
+
+    await fetch(`http://localhost:5000/api/users/${id}`, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token,
+      }
+    })
+
+    this.fetchUserData()
   }
 
 
   render() {
-    const { slicedData, activePage, filteredResult } = this.state
+    const { slicedData, activePage, filteredResult, totalCount, rowClicked, rowId } = this.state
+
     return (
       <div>
         <SearchModule
@@ -132,14 +202,22 @@ class UsersContainer extends Component {
         <div style={{ float: 'right', paddingright: '100px' }}>
 
         </div>
-        <UsersTableModule userDatas={filteredResult ? filteredResult : slicedData}></UsersTableModule>
-        <div style={{ paddingLeft: '30%', fontWeight: '30%' }}>
+        <UsersTableModule userDatas={filteredResult ? filteredResult : slicedData}
+          onEditClickBtn={this.onEditClickBtn}
+          onDeleteBtnClick={this.onDeleteBtnClick}
+          singleDatas={this.singleDatas}
+          rowClickHandler={this.rowClickHandler}
+          rowClicked={rowClicked}
+          rowId={rowId}
+          onEditChangeHandler={this.onEditChangeHandler}
+        />
+        <div style={{ paddingLeft: '35%', fontWeight: '30%' }}>
           <Pagination
             style={{ padding: '20px' }}
             activePage={activePage}
-            itemsCountPerPage={10}
-            totalItemsCount={450}
-            pageRangeDisplayed={10}
+            itemsCountPerPage={5}
+            totalItemsCount={totalCount}
+            pageRangeDisplayed={4}
             onChange={this.handlePageChange}
             itemClass="page-item"
             linkClass="page-link"
@@ -147,7 +225,7 @@ class UsersContainer extends Component {
 
         </div>
 
-      </div>
+      </div >
     )
   }
 }

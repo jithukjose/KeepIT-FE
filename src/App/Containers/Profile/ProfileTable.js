@@ -32,9 +32,7 @@ const ProfileModule = ({
                       <div class="container">
                       </div>
                       <hr />
-
                     </div>
-
                   </div>
                   <div className="row">
                     <div className="col-md-12">
@@ -52,6 +50,7 @@ const ProfileModule = ({
                             />
                           </div>
                         </div>
+
                         <div className="form-group row">
                           <label for="email" className="col-4 col-form-label">Email*</label>
                           <div className="col-8">
@@ -60,8 +59,8 @@ const ProfileModule = ({
                               disabled={true}
                             />
                           </div>
-                        </div>
 
+                        </div>
                         <div className="form-group row">
                           <label for="select" className="col-4 col-form-label">Display Name public as</label>
                           <div className="col-8">
@@ -79,12 +78,9 @@ const ProfileModule = ({
                               key={index}
                               disabled={readOnlyMode}
                               value={street} />
-
-
-
                           </div>
-
                         </div>
+
                         <div className="form-group row">
                           <label for="City" className="col-4 col-form-label">City</label>
                           <div className="col-8">
@@ -97,13 +93,13 @@ const ProfileModule = ({
 
                         <div className="form-group row">
                           <div className="offset-4 col-8">
-                            <button name="submit" type="submit" onClick={(e) => onSubmitProfileBtn(e)} className="btn btn-primary" disabled={readOnlyMode} >Update My Profile</button>
+                            <button name="submit" type="submit" onClick={() => onSubmitProfileBtn()} className="btn btn-primary" disabled={readOnlyMode} >Update My Profile</button>
                           </div>
                         </div>
+
                       </form>
                     </div>
                   </div>
-
                 </div>
               </div>
             </div>

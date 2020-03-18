@@ -68,6 +68,7 @@ const getUserDataSuccess = (userProfileData) => ({
     type: GET_ALL_USER_SUCCESS,
     payload: userProfileData
 })
+
 const postUserDataSuccess = (editStatus) => ({
     type: POST_USER_DATA_SUCCESS,
     payload: editStatus
@@ -104,7 +105,8 @@ export default (state = initialState, action) => {
         case POST_USER_DATA_FAIL:
             return { ...state, error: action.payload, areFetching: false }
 
-        default:
-            return state
+        default: break;
+
     }
+    return state
 }

@@ -5,6 +5,7 @@ import { isLogin } from '../../../../Helper/LocalStorage';
 
 
 
+
 class SignUpContainer extends React.PureComponent {
     state = {
         redirect: false
@@ -13,6 +14,10 @@ class SignUpContainer extends React.PureComponent {
     onChangeloginHandler = (event) => {
         let value = event.target.value
         let fieldName = event.target.name
+
+        // if (this.validator.fieldName('name')) {
+        //     // booya this field is valid!
+        // }
 
         this.setState({
             [fieldName]: value //this value will assign to this respective fieldname
@@ -58,7 +63,9 @@ class SignUpContainer extends React.PureComponent {
             })
     }
 
-    onLoginBtnClick = () => {
+    onLoginBtnClick = (e) => {
+
+        e.preventDefault()
         const { history } = this.props
         history.push('/login')
     }
@@ -79,7 +86,7 @@ class SignUpContainer extends React.PureComponent {
                     onChangeloginHandler={this.onChangeloginHandler}
                     onLoginBtnClick={this.onLoginBtnClick}
 
-                ></SignUpModule>
+                />
             </>
         )
     }
