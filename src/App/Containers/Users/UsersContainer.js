@@ -16,7 +16,8 @@ class UsersContainer extends Component {
     activePage: 1,
     rowClicked: false,
     rowId: '',
-    singleDatas: ''
+    singleDatas: '',
+    saveBtn: false
   }
 
   componentDidMount() {
@@ -109,65 +110,46 @@ class UsersContainer extends Component {
     })
   }
 
-  //add user to user table function
-  addUserButtonClick = () => {
-    this.setState((prevState) => ({
-      isModalButtonClicked: !prevState.isModalButtonClicked
-    }))
-  }
-
   onEditChangeHandler = (event, id) => {
-    console.log(id, 'here')
-
     let value = event.target.value
     let fieldName = event.target.name
     this.setState({
+
       [fieldName]: value//this value will assign to this respective fieldname,
-
-
     })
-
   }
 
-  // edit profile field
-  // componentWillReceiveProps(nextProps) {
-  //   console.log(nextProps, 'jit')
-  //   const data = {
-  //     name: this.state.name,
-  //     street: this.state.street,
-  //     city: this.state.city
-  //   }
 
-  //   // const { userProfileData } = this.props
-  //   if (nextProps.data !== data) {
-  //     // const { name, street, city } = userProfileData
-  //     this.setState({
-  //       name: this.state.name,
-  //       street: this.state.street, city: this.state.city
-  //     })
-  //   }
-  // }
-
-  onEditClickBtn = (data) => {
-
+  onEditClickBtn = (data, id) => {
     this.setState({
       rowClicked: true,
-      rowId: data.id
+      rowId: data.id,
+      saveBtn: true,
     })
 
-
-    // const TOKEN_KEY = 'jwt';
-    // const token = localStorage.getItem(TOKEN_KEY)
-    // const userIdFromLocalStorege = localStorage.getItem('userId')
-
-    // const response = await fetch(`http://localhost:5000/api/users/${userIdFromLocalStorege}`, {
-    //   method: 'PUT',
-    //   headers: {
-    //     Accept: 'application/json',
-    //     'Content-Type': 'application/json',
-    //     'Authorization': 'Bearer ' + token,
-    //   },
-    //   body: JSON.stringify(changedData)
+    const editedData = {
+      name: this.state.name,
+      street: this.state.street,
+      city: this.state.city
+    }
+    const TOKEN_KEY = 'jwt';
+    const token = localStorage.getItem(TOKEN_KEY)
+    if (this.state.saveBtn) {
+      fetch(`http://localhost:5000/api/users/${data.id}`, {
+        method: 'PUT',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token,
+        },
+        body: JSON.stringify(editedData)
+      })
+      this.setState({
+        saveBtn: false,
+        rowClicked: false
+      })
+    }
+    this.fetchUserData()
   }
 
   onDeleteBtnClick = async (event, id) => {
@@ -188,7 +170,8 @@ class UsersContainer extends Component {
 
 
   render() {
-    const { slicedData, activePage, filteredResult, totalCount, rowClicked, rowId } = this.state
+    const { slicedData, activePage, filteredResult, totalCount, rowClicked, rowId, saveBtn } = this.state
+    console.log(saveBtn, 'here')
 
     return (
       <div>
@@ -210,6 +193,7 @@ class UsersContainer extends Component {
           rowClicked={rowClicked}
           rowId={rowId}
           onEditChangeHandler={this.onEditChangeHandler}
+          saveBtn={saveBtn}
         />
         <div style={{ paddingLeft: '35%', fontWeight: '30%' }}>
           <Pagination
@@ -228,6 +212,6 @@ class UsersContainer extends Component {
       </div >
     )
   }
-}
 
+}
 export default UsersContainer

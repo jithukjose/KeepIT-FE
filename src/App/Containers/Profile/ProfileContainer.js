@@ -18,7 +18,6 @@ class ProfileContainer extends Component {
 
 
     componentWillReceiveProps(nextProps) {
-
         const { userProfileData } = this.props
         if (nextProps.userProfileData !== userProfileData) {
             const { name, street, city } = nextProps.userProfileData
