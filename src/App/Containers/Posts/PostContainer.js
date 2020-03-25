@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
+import React from 'react'
 // import { connect } from 'react-redux'
 
 import CardModule from '../../components/Card/index.card'
 import SearchModule from '../../components/Search/index.search'
 import ModalModule from '../../components/Modal/Modal'
+import classes from './posts.module.css'
 
 class PostContainer extends React.PureComponent {
   state = {
@@ -15,10 +16,8 @@ class PostContainer extends React.PureComponent {
   }
 
   componentDidMount() {
-    const { fetchPostData, postDatas } = this.props
+    const { fetchPostData } = this.props
     fetchPostData()
-
-    // this.structuredData(postDatas)
   }
 
   structuredData = (postDatas) => {
@@ -31,51 +30,15 @@ class PostContainer extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { fetchPostData, postDatas } = this.props
-    // fetchPostData()
-    console.log(nextProps, 'prop')
+    const { postDatas } = this.props
+    console.log(postDatas, 'posr')
 
     if (nextProps.postDatas !== postDatas) this.structuredData(nextProps.postDatas)
-    // this.structuredData(postDatas)
+
   }
-
-  // componentDidMount() {
-  //   this.fetchDatas()
-  // this.KeyPressHandler()
-
-  // fetchData = (searchString) => {
-  //   let url
-  //   url = 'https://jsonplaceholder.typicode.com/posts'
-
-  //   if (searchString) {
-  //     url = `${url}/${searchString}`
-  //   }
-  //   fetch(url)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       const slicedData = searchString ? [data] : data.slice(0, 20)
-  //       this.setState(() => ({ slicedData: slicedData }))
-  //       // this.setState(() => ({ slicedData}))   same as above line
-  //     })
-  // }
-  // fetchDatas = () => {
-  //   let url
-  //   url = 'https://jsonplaceholder.typicode.com/posts'
-
-  //   fetch(url)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       let slicedPostData = []
-  //       slicedPostData = data.slice(0, 30)
-  //       this.setState({
-  //         slicedData: slicedPostData,
-  //         filteredPostResult: slicedPostData
-  //       })
-  //     })
-  // }
   SearchData = () => {
-    // eslint-disable-next-line
-    const { filteredPostResult, slicedData } = this.state
+
+    const { slicedData } = this.state
     const { searchString } = this.props
 
     let filteredResults = []
@@ -85,12 +48,6 @@ class PostContainer extends React.PureComponent {
 
     this.setState({ filteredPostResult: filteredResults })
   }
-
-  //
-  // SearchHandler = (e) => {
-  // this.setState({
-  //   searchString: e.target.value
-  // })
 
   SearchHandler = (e) => {
     const { duxSearchHandler } = this.props
@@ -117,37 +74,48 @@ class PostContainer extends React.PureComponent {
       filteredPostResult: deletedData
     })
   }
-  onModalClick = () => {
-    alert('clicked!!!')
-    console.log('here')
+  onDetailClick = (e, id) => {
+
+    const { postDatas } = this.props
+
+    if (postDatas && id) {
+      const selectedItem = postDatas.filter((listItem) => listItem.id === id)
+      const postBody = selectedItem[0].body
+      this.setState({
+        selectedItem, postBody
+      })
+    }
 
     this.setState((prevState) => ({
-      isModalButtonClicked: !prevState.isModalButtonClicked
+      isModalButtonClicked: !prevState.isModalButtonClicked,
+
     }))
   }
 
   render() {
-    const { filteredPostResult, isModalButtonClicked } = this.state
-    const { postDatas } = this.props
+    const { filteredPostResult, isModalButtonClicked, postBody } = this.state
 
     return (
-      <>
+      <div className={classes.postcontainer}>
         <SearchModule
           searchHandler={this.SearchHandler}
           onSearchBtnClick={this.onSearchBtnClick}
           keyPressHandler={this.KeyPressHandler}
           onScreenEnterKey={this.OnScreenEnterKey}
-        ></SearchModule>
-        <CardModule
-          slicedData={filteredPostResult}
-          onDeleteClick={this.OnDeleteClick}
-          onModalClick={this.onModalClick}
-        ></CardModule>
+        />
+        <div className={classes.cardcontainer}>
+          <CardModule
+            slicedData={filteredPostResult}
+            onDeleteClick={this.OnDeleteClick}
+            onDetailClick={this.onDetailClick}
+          />
+        </div>
         <ModalModule
-          onModalClick={this.onModalClick}
+          onModalClick={this.onDetailClick}
           isModalButtonClicked={isModalButtonClicked}
-        ></ModalModule>
-      </>
+          postBody={postBody}
+        />
+      </div>
     )
   }
 }

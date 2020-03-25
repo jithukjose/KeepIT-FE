@@ -33,7 +33,19 @@ export const fetchTodosData = () => async (dispatch) => {
   dispatch({ type: GET_ALL_TODOS_START })
 
   try {
-    const response = await fetch('http://localhost:5000/api/todos')
+
+    const TOKEN_KEY = 'jwt';
+    const token = localStorage.getItem(TOKEN_KEY)
+
+    const response = await fetch('http://localhost:5000/api/todos', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token,
+      },
+      // body: JSON.stringify(personalData)
+    })
     const todoData = await response.json()
     dispatch(getPostSuccess(todoData))
 
@@ -45,6 +57,7 @@ export const fetchTodosData = () => async (dispatch) => {
 const getPostSuccess = (todoData) => ({
   type: GET_ALL_TODOS_SUCCESS,
   payload: todoData
+
 })
 
 const initialState = {

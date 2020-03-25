@@ -9,8 +9,20 @@ export const fetchPostData = () => async (dispatch) => {
   dispatch({ type: GET_ALL_POSTS_START })
 
   try {
-    const response = await fetch('http://localhost:5000/api/posts')
-    console.log(response, 'sad')
+
+    const TOKEN_KEY = 'jwt';
+    const token = localStorage.getItem(TOKEN_KEY)
+
+    const response = await fetch('http://localhost:5000/api/posts', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token,
+      },
+
+    })
+
     const postData = await response.json()
     dispatch(getPostSuccess(postData))
 

@@ -1,13 +1,19 @@
 import ProfileContainer from '../Profile/ProfileContainer'
 import { connect } from 'react-redux'
-// import { fetchDatas } from './dux'
 
-////onAddTodo  ===>onProfile
+import { fetchProfileData, postProfileData } from './dux'
+
+const mapStateToProps = (state) => ({
+  userProfileData: state.ProfileReducer.userProfileData,
+
+})
+
 const mapDispatchToProps = {
-  // fetchDat
+  fetchProfileData,
+  postProfileData
 }
-// const mapStateToProps = (state) => ({
-//   items: state.ToDoReducer.items
-// })
 
-export default connect(null, mapDispatchToProps)(ProfileContainer)
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainer)
+
+

@@ -1,21 +1,36 @@
 import React from 'react'
 
-import { Table } from 'reactstrap'
+import { Table, Input } from 'reactstrap'
 
-const UsersTableModule = ({ userDatas }) => {
-  console.log(userDatas, 'd')
-  const renderRows = userDatas.map((singleDatas) => (
-    <tr>
+const UsersTableModule = ({ userDatas, onEditClickBtn, onDeleteBtnClick, onEditChangeHandler, rowClicked, rowId, saveBtn }) => {
+  const renderRows = userDatas && userDatas.map((singleDatas, index) => (
+
+    (<tr
+    >
       <td>{singleDatas.id}</td>
-      <td>{singleDatas.name}</td>
+      <td>{rowClicked && singleDatas.id === rowId ? <input defaultValue={singleDatas.name} id="Name" name="name" key={index} onChange={(e) => onEditChangeHandler(e, singleDatas.id)}></input> : singleDatas.name}</td>
+
       <td>{singleDatas.email}</td>
-      <td>{singleDatas.street}</td>
-      <td>{singleDatas.city}</td>
-    </tr>
-  ))
+
+      <td>{rowClicked && singleDatas.id === rowId ? <input defaultValue={singleDatas.street} id="Name" name="street" key={index} onChange={(e) => onEditChangeHandler(e)}></input> : singleDatas.street}</td>
+
+      <td>{rowClicked && singleDatas.id === rowId ? <input defaultValue={singleDatas.city} id="Name" name="city" key={index} onChange={(e) => onEditChangeHandler(e)}></input> : singleDatas.city}</td>
+
+      <i style={{ paddingleft: '3em', padding: '20px', cursor: 'pointer' }}
+
+        className={rowClicked && singleDatas.id === rowId && saveBtn && saveBtn === true ? "fas fa-check-square" : "fas fa-edit"}
+
+
+        onClick={(e) => onEditClickBtn(singleDatas)}></i >
+
+      <i style={{ cursor: 'pointer' }} class="fas fa-trash" onClick={(e) => onDeleteBtnClick(e, singleDatas.id)}></i>
+    </tr >)
+
+  )
+  )
   return (
-    <div style={{ width: '90%', padding: '10px', margin: '20px' }}>
-      <Table dark striped hover>
+    <div style={{ width: '90%', padding: '10px', margin: '0px' }}>
+      <Table dark striped hover >
         <thead>
           <tr>
             <th>User ID</th>
@@ -25,10 +40,10 @@ const UsersTableModule = ({ userDatas }) => {
             <th>City</th>
           </tr>
         </thead>
-
-        <tbody>{renderRows}</tbody>
+        <tbody >{renderRows}</tbody>
       </Table>
     </div>
+
   )
 }
 

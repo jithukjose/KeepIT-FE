@@ -1,18 +1,23 @@
+
 export default [
   {
     menuName: 'Posts',
-    Url: '/'
+    Url: '/Posts'
   },
   {
     menuName: 'Users',
-    Url: '/Users'
+    Url: '/users'
   },
   {
     menuName: 'Todos',
-    Url: '/Todos'
+    Url: '/todos'
   },
   {
     menuName: 'Profile',
-    Url: '/Profile'
-  }
+    Url: '/profile'
+  },
+  // {
+  //   menuName: 'SignOut',
+  //   Url: '/signout'
+  // }
 ]

@@ -1,117 +1,87 @@
 import React, { Component } from 'react'
 import ProfileModule from '../Profile/ProfileTable'
-import moment from 'moment'
+// import moment from 'moment'
 
 class ProfileContainer extends Component {
-  state = {
-    name: '',
-    age: '',
-    country: '',
-    date: '',
-    startDate: new Date(),
-    isDataAvaliable: false,
-    myname: ''
-    // profileName: ''
-  }
+    state = {
+        readOnlyMode: true,
+        name: '',
+        street: '',
+        city: '',
 
-  // onNameChangeHandler = (e) => {
-  //   this.setState({
-  //     name: e.target.value
-  //   })
-  // }
+    }
 
-  handleChangeForDate = (date) => {
-    const newdate = moment(date).format('MM/DD/YYYY')
+    componentDidMount() {
+        const { fetchProfileData } = this.props
+        fetchProfileData()
+    }
 
-    this.setState({
-      startDate: date,
-      newDate: newdate
-    })
-  }
 
-  onChangeHandler = (event) => {
-    let value = event.target.value
-    let fieldName = event.target.name
+    componentWillReceiveProps(nextProps) {
+        const { userProfileData } = this.props
+        if (nextProps.userProfileData !== userProfileData) {
+            const { name, street, city } = nextProps.userProfileData
+            this.setState({
+                name,
+                street, city
+            })
+        }
+    }
 
-    this.setState({
-      [fieldName]: value //this value will assign to this respective fieldname
-    })
-  }
-  OnSubmitButton = (event) => {
-    // const { InputForm, inputFormData } = this.props
-    // InputForm()
-    this.setState({
-      isDataAvaliable: true,
-      fullname: this.state.name,
-      agevalue: this.state.age,
-      countryValue: this.state.country,
-      dateValue: this.state.newDate
-    })
-    let myName = this.state.name
-    let myAge = this.state.age
+    onEditChangeHandler = (event) => {
+        let value = event.target.value
+        let fieldName = event.target.name
+        this.setState({
+            [fieldName]: value //this value will assign to this respective fieldname
+        })
+    }
+    //disable read only mode on button click
+    onEditProfileBtn = () => {
+        this.setState({
+            readOnlyMode: false,
+        })
+    }
 
-    this.setState({
-      // profileName:
-      name: '',
-      age: '',
-      country: '',
-      newDate: ''
-    })
+    onSubmitProfileBtn = async (event) => {
+        const { postProfileData, fetchProfileData, userProfileData } = this.props
+        // event.preventDefault();
+        const changedData = {
+            name: this.state.name,
+            street: this.state.street,
+            city: this.state.city,
+            email: null
+        }
 
-    // this.setState({
-    //   profileName: this.state.name,
-    //   getAge: this.state.age,
-    //   getCountry: this.state.country,
-    //   getDate: this.state.newDate
-    // })
-  }
-  OnEditButton = () => {
-    this.setState({
-      fullname: '',
-      agevalue: '',
-      countryValue: '',
-      dateValue: ''
-    })
+        await postProfileData(changedData)
+        this.setState({
+            readOnlyMode: true,
+        })
+        fetchProfileData()
+        const { name, street, city } = userProfileData
 
-    // console.log(this.myName, 'mm')
-    // this.setState({
-    //   fullname: this.myName
-    // })
-  }
+        this.setState({
+            name,
+            street, city
+        })
+    }
 
-  render() {
-    const {
-      name,
-      age,
-      isDataAvaliable,
-      country,
-      startDate,
-      newDate,
-      fullname,
-      agevalue,
-      countryValue,
-      dateValue
-    } = this.state
+    render() {
 
-    return (
-      <ProfileModule
-        isDataAvaliable={isDataAvaliable}
-        OnSubmitButton={this.OnSubmitButton}
-        startDate={startDate}
-        handleChangeForDate={this.handleChangeForDate}
-        onChangeHandler={this.onChangeHandler}
-        profileName={name}
-        proName={fullname}
-        proage={agevalue}
-        procountry={countryValue}
-        profileAge={age}
-        profileCountry={country}
-        profileDate={newDate}
-        proDate={dateValue}
-        OnEditButton={this.OnEditButton}
-      />
-    )
-  }
+        const { name, street, city, readOnlyMode } = this.state
+        return (
+            <ProfileModule
+                name={name}
+                street={street}
+                city={city}
+                userProfileData={this.props.userProfileData}
+                readOnlyMode={readOnlyMode}
+                onEditProfileBtn={this.onEditProfileBtn}
+                onEditChangeHandler={this.onEditChangeHandler}
+                onSubmitProfileBtn={this.onSubmitProfileBtn}
+
+            />
+        )
+    }
 }
 
 export default ProfileContainer

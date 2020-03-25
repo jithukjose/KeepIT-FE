@@ -3,13 +3,15 @@ import React from 'react'
 import { Table } from 'reactstrap'
 
 const TodoTableModule = ({ slicedData }) => {
-  console.log(slicedData)
+  console.log(slicedData, 'slicedData')
+
   const renderRows = slicedData.map((todo) => (
-    <tr>
+
+    < tr >
       <td>{todo.id}</td>
       <td>{todo.title}</td>
-      <td>{todo.completed}</td>
-    </tr>
+      <td>{todo.completed.toString()}</td>
+    </tr >
   ))
   return (
     <div style={{ width: '90%', padding: '10px', margin: '20px' }}>
