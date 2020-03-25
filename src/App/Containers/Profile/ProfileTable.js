@@ -4,16 +4,20 @@ import { Container } from 'reactstrap'
 // import country from '../../../Helper/Country'
 // import DatePicker from 'react-datepicker'
 // import 'react-datepicker/dist/react-datepicker.css'
+import './profileModule.css'
 
 const ProfileModule = ({
   onEditChangeHandler, index, userProfileData, readOnlyMode, onEditProfileBtn, name, street, city, onSubmitProfileBtn }) => {
-  console.log('street', street)
+
   return (
     <>
       <Container style={{ paddingTop: '6rem' }}  >
-        <div className="container" >
+        {/* <div className="container" >
           <div className="row">
             <div className="col-md-3 ">
+              <div className="list-group ">
+                <button className="list-group-item list-group-item-action active">Dashboard</button>
+              </div>
               <div className="list-group ">
                 <button className="list-group-item list-group-item-action active">Dashboard</button>
               </div>
@@ -59,18 +63,7 @@ const ProfileModule = ({
                               disabled={true}
                             />
                           </div>
-
                         </div>
-                        <div className="form-group row">
-                          <label for="select" className="col-4 col-form-label">Display Name public as</label>
-                          <div className="col-8">
-                            <select id="select" name="select" className="custom-select">
-                              <option value="admin">Admin</option>
-                            </select>
-                          </div>
-                        </div>
-
-
                         <div className="form-group row">
                           <label for="website" className="col-4 col-form-label">Street</label>
                           <div className="col-8">
@@ -104,8 +97,25 @@ const ProfileModule = ({
               </div>
             </div>
           </div>
+        </div> */}
+        <div class="fancy-cards">
+          <h1>Microinteraction on active</h1>
+          <p>It triggers a subtle micro-interaction (scales and adjusts) when the user interacts with it.</p>
+          <div class="fancy-card">
+            <div class="top">
+              <div class="caption">
+                <h3 class="title">Beautiful Summer</h3>
+                <a href="" class="button">Find Out </a>
+              </div>
+            </div>
+            <div class="middle"></div>
+            <div class="bottom"></div>
+          </div>
         </div>
+
+
       </Container>
+
 
     </>
   )

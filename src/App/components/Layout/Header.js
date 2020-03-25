@@ -24,7 +24,7 @@ const HeaderModule = ({ history }) => {
     history.push('/login')
   }
 
-  const SignOutButton = <button className={classes.signoutbutton} onClick={signOutClickHandler} >SignOut</button>
+  const SignOutButton = <button className={classes.signoutbutton} onClick={signOutClickHandler} >Signout</button>
 
   renderedMenuItems.push(SignOutButton)
 

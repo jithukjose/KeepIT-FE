@@ -6,6 +6,9 @@ import SearchModule from '../../components/Search/index.search'
 import ModalModule from '../../components/Modal/Modal'
 import classes from './posts.module.css'
 
+import CardsModule from './PostCard'
+import './PostsModules.css'
+
 class PostContainer extends React.PureComponent {
   state = {
     postData: [],
@@ -34,8 +37,8 @@ class PostContainer extends React.PureComponent {
     console.log(postDatas, 'posr')
 
     if (nextProps.postDatas !== postDatas) this.structuredData(nextProps.postDatas)
-
   }
+
   SearchData = () => {
 
     const { slicedData } = this.state
@@ -103,18 +106,23 @@ class PostContainer extends React.PureComponent {
           keyPressHandler={this.KeyPressHandler}
           onScreenEnterKey={this.OnScreenEnterKey}
         />
-        <div className={classes.cardcontainer}>
+        {/* <div className={classes.cardcontainer}>
           <CardModule
             slicedData={filteredPostResult}
             onDeleteClick={this.OnDeleteClick}
             onDetailClick={this.onDetailClick}
           />
-        </div>
+        </div> */}
         <ModalModule
           onModalClick={this.onDetailClick}
           isModalButtonClicked={isModalButtonClicked}
           postBody={postBody}
         />
+        <CardsModule
+          slicedData={filteredPostResult}
+          onDeleteClick={this.OnDeleteClick}
+          onDetailClick={this.onDetailClick} />
+
       </div>
     )
   }

@@ -1,0 +1,184 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway);
+body {
+  background: radial-gradient(#fff, #c1c1c1);
+  height: 120vh;
+}
+body .title {
+  position: absolute;
+  top: 75px;
+}
+body .title h1 {
+  margin: 40px 0px 0px 0px;
+  font-family: 'poppins', sans-serif;
+  color: #3d3d3d;
+  font-size: 10em;
+  background: none;
+  font-weight: black;
+  border: none;
+  text-shadow: -25px 0px 2px #c1c1c1;
+}
+body .title h2 {
+  margin: 10px 0px 0px 0px;
+  font-size: 18px;
+  color: #8B8B8B;
+  font-weight: 400;
+  font-family: 'Raleway', sans-serif;
+}
+body .ui {
+  width: 900px;
+  margin: 0 auto;
+  font-family: 'Raleway', sans-serif;
+  color: white;
+  box-shadow: none;
+  box-shadow: 0px 0px 5px 0px 2e2e2e;
+}
+body .ui ul {
+  margin: 0px 30px 10px 0px;
+  padding: 0;
+  list-style-type: none;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 20px;
+}
+body .ui .drop {
+  z-index: -999;
+  opacity: 0;
+  width: 300px;
+  height: 60px;
+  background: #3e8368;
+  position: absolute;
+  color: white;
+  bottom: 0;
+  padding: 12px 30px 21px 30px;
+  transition: all ease-in-out 0.3s;
+  transition-property: bottom,opacity;
+  transition-duration: .3s;
+}
+body .ui .drop p {
+  color: #f8fbfa;
+}
+body .ui_box.white {
+  background: #fff;
+  color: #2e2e2e;
+  box-shadow: -1px 0px rgba(0, 0, 0, 0.07);
+}
+body .ui_box {
+  width: 300px;
+  height: 250px;
+  position: relative;
+  background: #3d3d3d;
+  margin-bottom: 50px;
+  float: left;
+  box-shadow: -1px 0px rgba(255, 255, 255, 0.07);
+  cursor: pointer;
+  transform: scale(1);
+  transition-property: transform,background;
+  transition-duration: .3s;
+}
+body .ui_box__inner {
+  padding: 30px;
+}
+body .ui_box__inner span {
+  font-size: 36px;
+  font-weight: 700;
+}
+
+
+body .ui_box h2 {
+  font-weight: normal;
+  font-size: 16px;
+  margin: -4px 0px 3px 0px;
+}
+body .ui_box p {
+  font-size: 11px;
+  color: #b6b6b6;
+  clear: left;
+  font-weight: 300;
+  width: 160px;
+  margin: 2px 0px 15px 0px;
+}
+body .ui_box:hover {
+  background: #3d3d3d;
+  color: #fff;
+  transition-property: transform,background;
+  transition-duration: .3s;
+  position: relative;
+  z-index: 1;
+}
+
+.ui_box:hover > .ui_box__inner p {
+  color: #b3dacb;
+}
+
+.ui_box:hover > .drop {
+  transition-property: bottom,opacity;
+  transition-duration: .3s;
+  bottom: -42px;
+  z-index: -99999999;
+  opacity: 1;
+}
+
+.ui_box:hover > .drop .arrow {
+  transition-property: transform;
+  transition-duration: 1s;
+  transform: rotate(765deg);
+}
+
+.ui_box:hover > .ui_box__inner .progress_graph > div {
+  background: white;
+}
+
+.ui_box:hover > .ui_box__inner .progress .progress_bar, .ui_box:hover > .ui_box__inner .progress .progress_bar--two {
+  background: white;
+}
+
+
+
+@keyframes bar {
+  from {
+    width: 0px;
+  }
+  to {
+    width: 58%;
+  }
+}
+@keyframes bar2 {
+  from {
+    width: 0px;
+  }
+  to {
+    width: 78%;
+  }
+}
+@keyframes graph {
+  from {
+    height: 0px;
+  }
+  to {
+    height: 20px;
+  }
+}
+@keyframes graph2 {
+  from {
+    height: 0px;
+  }
+  to {
+    height: 30px;
+  }
+}
+@keyframes graph3 {
+  from {
+    height: 0px;
+  }
+  to {
+    height: 24px;
+  }
+}
+@keyframes graph4 {
+  from {
+    height: 0px;
+  }
+  to {
+    height: 13px;
+  }
+}
