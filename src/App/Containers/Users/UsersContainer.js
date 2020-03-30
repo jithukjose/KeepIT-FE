@@ -4,6 +4,7 @@ import UsersTableModule from './TableUsers'
 
 import Pagination from "react-js-pagination"
 import DeleteModalModule from '../../components/Modal/DeleteModalModule'
+import SuccessModalModule from '../../components/Modal/SuccessModalModule'
 
 
 
@@ -19,7 +20,8 @@ class UsersContainer extends Component {
     rowClicked: false,
     rowId: '',
     singleDatas: '',
-    saveBtn: false
+    saveBtn: false,
+    isSuccessModalButton: false
   }
 
   componentDidMount() {
@@ -121,8 +123,15 @@ class UsersContainer extends Component {
     })
   }
 
+  onModalClick = () => {
+    this.setState((prevState) => ({
+      isSuccessModalButton: !prevState.isSuccessModalButton,
 
+    }))
+  }
   onEditClickBtn = (data, id) => {
+
+
     this.setState({
       rowClicked: true,
       rowId: data.id,
@@ -136,55 +145,53 @@ class UsersContainer extends Component {
     }
     const TOKEN_KEY = 'jwt';
     const token = localStorage.getItem(TOKEN_KEY)
+
     if (this.state.saveBtn) {
-      fetch(`http://localhost:5000/api/users/${data.id}`, {
+      fetch(`http://localhost:5000/api/users/${this.state.rowId}`, {
+
         method: 'PUT',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + token,
         },
+
         body: JSON.stringify(editedData)
+
+
       })
+      this.setState((prevState) => ({
+        isSuccessModalButton: !prevState.isSuccessModalButton,
+
+      }))
       this.setState({
         saveBtn: false,
         rowClicked: false
       })
     }
-    this.fetchUserData()
-  }
-
-  onDeleteBtnClick = async (event, id) => {
-    const TOKEN_KEY = 'jwt';
-    const token = localStorage.getItem(TOKEN_KEY)
-    this.setState({
-      clickedId: id
-    })
-
-    await fetch(`http://localhost:5000/api/users/${id}`, {
-      method: 'DELETE',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token,
-      }
-    })
 
     this.fetchUserData()
-  }
 
-  //delete user data after modal confirmation
-  onDeleteConfirmClick = () => {
+  }
+  onDeleteBtnClick = (event, id) => {
 
     this.setState((prevState) => ({
       isDeleteModalButtonClicked: !prevState.isDeleteModalButtonClicked,
 
     }))
 
+    this.setState({
+      deletedId: id
+    })
+  }
+
+  //delete user data after modal confirmation
+  onDeleteConfirmClick = () => {
+
+
     const TOKEN_KEY = 'jwt';
     const token = localStorage.getItem(TOKEN_KEY)
-
-    fetch(`http://localhost:5000/api/users/${this.state.clickedId}`, {
+    fetch(`http://localhost:5000/api/users/${this.state.deletedId}`, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',
@@ -192,14 +199,19 @@ class UsersContainer extends Component {
         'Authorization': 'Bearer ' + token,
       }
     })
+    this.setState((prevState) => ({
+      isDeleteModalButtonClicked: !prevState.isDeleteModalButtonClicked,
+
+    }))
+
     this.fetchUserData()
 
   }
 
 
   render() {
-    const { slicedData, activePage, filteredResult, totalCount, rowClicked, rowId, saveBtn, isDeleteModalButtonClicked } = this.state
-    console.log(saveBtn, 'here')
+    const { slicedData, activePage, filteredResult, totalCount, rowClicked, rowId, saveBtn, isDeleteModalButtonClicked, isSuccessModalButton } = this.state
+    console.log(this.state.rowId, 'haahah')
     return (
       <>
         <div class="container text-center" >
@@ -248,10 +260,13 @@ class UsersContainer extends Component {
             />
           </div>
           <DeleteModalModule
-            onModalClick={this.OnDeleteClick}
+            onModalClick={this.onDeleteBtnClick}
             isDeleteModalButtonClicked={isDeleteModalButtonClicked}
             onDeleteConfirmClick={this.onDeleteConfirmClick}
           />
+          <SuccessModalModule
+            isSuccessModalButton={isSuccessModalButton}
+            onModalClick={this.onModalClick} />
 
 
         </div >

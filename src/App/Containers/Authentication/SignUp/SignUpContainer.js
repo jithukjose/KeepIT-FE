@@ -69,7 +69,7 @@ class SignUpContainer extends React.PureComponent {
             console.log(personalData, 'data')
         } else {
 
-            alert('erroe')
+            alert('error')
         }
 
 

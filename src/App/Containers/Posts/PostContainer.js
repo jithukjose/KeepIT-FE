@@ -5,6 +5,7 @@ import React from 'react'
 import SearchModule from '../../components/Search/index.search'
 import ModalModule from '../../components/Modal/Modal'
 import DeleteModalModule from '../../components/Modal/DeleteModalModule'
+// import Pagination from "react-js-pagination"
 
 import CardsModule from './PostCard'
 import './PostsModules.css'
@@ -26,7 +27,7 @@ class PostContainer extends React.PureComponent {
 
   structuredData = (postDatas) => {
     let slicedDataa = []
-    slicedDataa = postDatas.slice(0, 30)
+    slicedDataa = postDatas
     this.setState({
       slicedData: slicedDataa,
       filteredPostResult: slicedDataa
@@ -123,47 +124,58 @@ class PostContainer extends React.PureComponent {
   }
 
   render() {
-    const { filteredPostResult, isModalButtonClicked, postBody, isDeleteModalButtonClicked, } = this.state
+    const { filteredPostResult, isModalButtonClicked, postBody, isDeleteModalButtonClicked, activePage, totalCount } = this.state
 
 
     return (
       <>
-
-        <div class="container text-center" >
-          <div class="costumModal">
-            <h1 class="title" style={{ fontSize: '60px', color: '#757575', fontWeight: 'bold', paddingLeft: '400px' }}>
-              Notes
+        <div>
+          <div class="container text-center" >
+            <div class="costumModal">
+              <h1 class="title" style={{ fontSize: '60px', color: '#757575', fontWeight: 'bold', paddingLeft: '400px' }}>
+                Notes
         </h1>
+            </div>
           </div>
-        </div>
 
 
-        <div style={{ paddingLeft: '13% ', paddingTop: '60px' }}>
-          <SearchModule
-            searchHandler={this.SearchHandler}
-            onSearchBtnClick={this.onSearchBtnClick}
-            keyPressHandler={this.KeyPressHandler}
-            onScreenEnterKey={this.OnScreenEnterKey}
+          <div style={{ paddingLeft: '13% ', paddingTop: '60px' }}>
+            <SearchModule
+              searchHandler={this.SearchHandler}
+              onSearchBtnClick={this.onSearchBtnClick}
+              keyPressHandler={this.KeyPressHandler}
+              onScreenEnterKey={this.OnScreenEnterKey}
+            />
+          </div>
+
+          <ModalModule
+            onModalClick={this.onDetailClick}
+            isModalButtonClicked={isModalButtonClicked}
+            postBody={postBody}
+            title={this.title}
           />
+          <CardsModule
+            slicedData={filteredPostResult}
+            onDeleteClick={this.OnDeleteClick}
+            onDetailClick={this.onDetailClick} />
+
+          <DeleteModalModule
+            onModalClick={this.OnDeleteClick}
+            isDeleteModalButtonClicked={isDeleteModalButtonClicked}
+            onDeleteConfirmClick={this.onDeleteConfirmClick}
+          />
+
         </div>
-
-        <ModalModule
-          onModalClick={this.onDetailClick}
-          isModalButtonClicked={isModalButtonClicked}
-          postBody={postBody}
-          title={this.title}
-        />
-        <CardsModule
-          slicedData={filteredPostResult}
-          onDeleteClick={this.OnDeleteClick}
-          onDetailClick={this.onDetailClick} />
-
-        <DeleteModalModule
-          onModalClick={this.OnDeleteClick}
-          isDeleteModalButtonClicked={isDeleteModalButtonClicked}
-          onDeleteConfirmClick={this.onDeleteConfirmClick}
-        />
-
+        {/* <Pagination
+          style={{ padding: '20px' }}
+          activePage={activePage}
+          itemsCountPerPage={10}
+          totalItemsCount={totalCount}
+          pageRangeDisplayed={4}
+          onChange={this.handlePageChange}
+          itemClass="page-item"
+          linkClass="page-link"
+        /> */}
       </>
     )
   }

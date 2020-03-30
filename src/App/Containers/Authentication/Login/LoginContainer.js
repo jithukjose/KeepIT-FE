@@ -59,7 +59,7 @@ class LoginContainer extends React.PureComponent {
 
             NotifyError()
             if (data.id) {
-                debugger
+
                 localStorage.setItem(TOKEN_KEY, data.token);
                 localStorage.setItem('userId', data.id)
                 history.push('/home')

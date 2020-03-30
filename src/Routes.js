@@ -25,19 +25,6 @@ const PrivateRoute = ({ component: Component, layout: Layout, ...rest }) => {
   );
 };
 
-// const PublicRoute = ({ component: Component, restricted, ...rest }) => {
-
-//   return (
-//     <Route render={props => (
-
-//       isLogin() && restricted ?
-//         <Redirect to="/login" />
-//         :
-//         <Component />
-//     )} />
-//   );
-// };
-
 
 const Routes = () => {
   return (
