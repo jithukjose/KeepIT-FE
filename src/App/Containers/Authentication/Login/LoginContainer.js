@@ -2,8 +2,12 @@ import React from 'react'
 import LoginModule from '../Login/LoginPage'
 import { isLogin } from '../../../../Helper/LocalStorage'
 
+import { NotifyError, Notify } from '../../../components/Toaster/Tosater'
+import { ToastContainer } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 
 class LoginContainer extends React.PureComponent {
+
 
     state = {
         isLogin: false,
@@ -12,12 +16,13 @@ class LoginContainer extends React.PureComponent {
     }
 
     componentDidMount() {
+
         const { history } = this.props
         if (isLogin()) {
             history.push('/posts')
         }
     }
-
+    // notify = () => toast("Hello", { autoClose: false });
     onChangeloginHandler = (event) => {
         let value = event.target.value
         let fieldName = event.target.name
@@ -28,7 +33,9 @@ class LoginContainer extends React.PureComponent {
     }
 
     onLoginSubmitBtn = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
+
+        // Notify()
 
         const TOKEN_KEY = 'jwt'
         const { history } = this.props
@@ -46,17 +53,22 @@ class LoginContainer extends React.PureComponent {
                     password: this.state.password
                 })
 
-            })
 
+            })
             const data = await response.json()
 
+            NotifyError()
             if (data.id) {
+                debugger
                 localStorage.setItem(TOKEN_KEY, data.token);
                 localStorage.setItem('userId', data.id)
-                history.push('/posts')
+                history.push('/home')
+                // NotifyError()
+
             }
+
         } catch (error) {
-            console.log(error)
+
         }
     }
 
@@ -68,12 +80,18 @@ class LoginContainer extends React.PureComponent {
     }
 
     render() {
+
         return (
             <>
+                <div>
+                    <ToastContainer
+                        hideProgressBar />
+                </div>
                 <LoginModule
                     onLoginSubmitBtn={this.onLoginSubmitBtn}
                     onChangeloginHandler={this.onChangeloginHandler}
                     onSignupBtnClick={this.onSignupBtnClick}
+                    notify={this.notify}
                 />
             </>
         )

@@ -3,67 +3,94 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 import './login.css'
 
-import {
-    Container, Col, Form,
-    FormGroup, Label, Input,
-    Button, Jumbotron, Row
-} from 'reactstrap';
-
-
 const LoginModule = ({
-    // validateEmail,
-    valid,
     onLoginSubmitBtn,
     onChangeloginHandler, onSignupBtnClick
 
 }) => {
 
     return (
+        <>
+            <img className="d-block img-fluid" style={{ height: '60px', cursor: 'pointer' }} src="https://www.plantronics.com/etc/designs/plantronics/clientlib-all/img/poly-logo.png" alt="First slide" />
+            <h4 style={{ fontWeight: 'bold' }}>KeepIT</h4>
 
-        <body id="LoginForm">
-            <header></header>
-            <div className="container">
+            <div >
 
-                <div className="login-form">
-                    <div className="main-div">
-                        <div className="panel">
-                            <h2>Login</h2>
-                            <p>Please enter your email and password</p>
+                <div className="container" >
+
+                    <div className="row" >
+
+                        <div className="col-md-8 banner-sec">
+                            <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
+
+                                <div className="carousel-inner" role="listbox">
+                                    <div className="carousel-item active">
+                                        <img className="d-block img-fluid" style={{ height: '550px' }} src="https://images.pexels.com/photos/7097/people-coffee-tea-meeting.jpg" alt="First slide" />
+                                        <div className="carousel-caption d-none d-md-block">
+                                            <div className="banner-text">
+                                                <h2 style={{ color: 'red' }}>KeepIT</h2>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="carousel-item">
+                                        <img className="d-block img-fluid" src="https://images.pexels.com/photos/7097/people-coffee-tea-meeting.jpg" alt="First slide" />
+                                        <div className="carousel-caption d-none d-md-block">
+                                            <div className="banner-text">
+                                                <h2>This is Heaven</h2>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="carousel-item">
+                                        <img className="d-block img-fluid" src="https://images.pexels.com/photos/872957/pexels-photo-872957.jpeg" alt="First slide" />
+                                        <div className="carousel-caption d-none d-md-block">
+                                            <div className="banner-text">
+                                                <h2>This is Heaven</h2>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
-                        <form id="Login">
-                            <div className="form-group">
-                                <input type="email" className="form-control" id="inputEmail" placeholder="Email Address" name="email" onChange={(e) => onChangeloginHandler(e)} />
-
-                            </div>
-
-                            <div className="form-group">
-
-                                <input type="password" className="form-control" id="inputPassword" placeholder="Password" name="password" onChange={(e) => onChangeloginHandler(e)} />
-
-                            </div>
-                            <div className="forgot">
-                                <a >Forgot password?</a>
-                            </div>
-                            <button type="submit" onClick={(e) => onLoginSubmitBtn(e)} className="btn btn-primary">Login</button>
+                        <div className="col-md-4 login-sec">
+                            <h2 className="text-center">Login Now</h2>
 
 
-                            <p >
-                                Not a member yet ?
+
+                            <form className="login-form">
+                                <div className="form-group">
+                                    <label for="exampleInputEmail1" className="text-uppercase">Email</label>
+                                    <input type="email" className="form-control" placeholder="" name="email" onChange={(e) => onChangeloginHandler(e)} />
+
+                                </div>
+                                <div className="form-group">
+                                    <label for="exampleInputPassword1" className="text-uppercase">Password</label>
+                                    <input type="password" className="form-control" placeholder="" name="password" onChange={(e) => onChangeloginHandler(e)} />
+                                </div>
+
+
+                                <div className="form-check">
+
+                                    <button type="submit" className="btn btn-login " onClick={(e) => onLoginSubmitBtn(e)}>Submit</button>
+                                    <p >
+                                        Not a member yet ?
                              <a onClick={(e) => onSignupBtnClick(e)} href="#toregister" >Join us</a>
-                            </p>
+                                    </p>
+                                </div>
 
-                        </form>
+                            </form>
+
+                        </div>
+
                     </div>
                 </div>
             </div>
-
-
-        </body >
-
-
+        </>
     )
 }
-
 
 
 export default LoginModule;

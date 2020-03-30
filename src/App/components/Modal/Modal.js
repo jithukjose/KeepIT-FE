@@ -5,13 +5,14 @@ const ModalModule = ({ isModalButtonClicked, onModalClick, postBody }) => (
   <Row>
     <div>
       <Modal isOpen={isModalButtonClicked}>
-        <ModalHeader>Modal title</ModalHeader>
+        <ModalHeader>modal titlew</ModalHeader>
         <ModalBody>
           {postBody}
+
         </ModalBody>
         <ModalFooter>
           {/* <Button color="primary">Do Something</Button>{' '} */}
-          <Button color="secondary" onClick={onModalClick}>
+          <Button color="danger" onClick={onModalClick}>
             Cancel
           </Button>
         </ModalFooter>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import HomeCardModule from './HomeCardModule'
-
+import './home.css'
 
 
 class HomeContainer extends Component {

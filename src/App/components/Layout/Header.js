@@ -5,6 +5,8 @@ import { Link, withRouter } from 'react-router-dom'
 import Path from '../../components/Layout/menu'
 import classes from './button.module.css'
 
+import { NotifyError, Notify } from '../Toaster/Tosater'
+import { ToastContainer } from 'react-toastify';
 
 
 const HeaderModule = ({ history }) => {
@@ -24,7 +26,7 @@ const HeaderModule = ({ history }) => {
     history.push('/login')
   }
 
-  const SignOutButton = <button className={classes.signoutbutton} onClick={signOutClickHandler} >Signout</button>
+  const SignOutButton = <button className={classes.signoutbutton} onClick={signOutClickHandler}  >Signout</button>
 
   renderedMenuItems.push(SignOutButton)
 

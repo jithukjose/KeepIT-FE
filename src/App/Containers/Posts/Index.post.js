@@ -1,7 +1,9 @@
 import PostContainer from '../Posts/PostContainer'
 import { connect } from 'react-redux'
 import { fetchPostData } from './dux'
-import { duxSearchHandler } from './dux'
+import { duxSearchHandler, } from './dux'
+
+
 
 const mapStateToProps = (state) => ({
   postDatas: state.PostsReducer.items,
@@ -9,7 +11,9 @@ const mapStateToProps = (state) => ({
 })
 const mapDispatchToProps = {
   fetchPostData,
-  duxSearchHandler
+  duxSearchHandler,
+
 }
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostContainer)

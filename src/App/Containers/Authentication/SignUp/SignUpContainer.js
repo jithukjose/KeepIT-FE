@@ -1,10 +1,12 @@
 import React from 'react'
 import SignUpModule from './SignUp'
-import { Redirect } from 'react-router';
+// import { Redirect } from 'react-router';
 import { isLogin } from '../../../../Helper/LocalStorage';
+import * as yup from 'yup'
 
+import { NotifyError, Notify } from '../../../components/Toaster/Tosater'
 
-
+// let yup = require('yup');
 
 class SignUpContainer extends React.PureComponent {
     state = {
@@ -31,17 +33,47 @@ class SignUpContainer extends React.PureComponent {
         }
     }
 
+    validate = async (name, email, street, city, password) => {
+        let yup = require('yup');
 
-    onSubmitBtnClick = () => {
+        let schema = await yup.object().shape({
+
+            name: yup.string().required('Name required').min(2, 'Too Short!'),
+            email: yup.string().email('Invalid email').required('Email required'),
+            street: yup.string().required('Street required'),
+            city: yup.string().required('City required'),
+            password: yup.string().required('No password provided.').min(8, 'Password is too short - should be 8 chars minimum.')
+        })
+        console.log(schema, 'helo')
+
+        return await schema.validate(name, email, street, city, password, { abortEarly: false })
+    }
 
 
-        let personalData = {
-            name: this.state.name,
-            email: this.state.email,
-            street: this.state.street,
-            city: this.state.city,
-            password: this.state.password
+    onSubmitBtnClick = async (e, personalData) => {
+
+        e.preventDefault()
+        const { name, email, street, city, password } = this.state
+
+        const isValid = await this.validate()
+        console.log(isValid, 'here')
+        if (isValid) {
+
+            let personalData = {
+                name: name,
+                email: email,
+                street: street,
+                city: city,
+                password: password
+            }
+            console.log(personalData, 'data')
+        } else {
+
+            alert('erroe')
         }
+
+
+
 
         fetch('http://localhost:5000/api/signup', {
             method: 'POST',
@@ -55,8 +87,14 @@ class SignUpContainer extends React.PureComponent {
 
         }
         ).then((result) => {
-            this.setState({ redirect: true })
+            alert('haha')
 
+            if (result) {
+                // const { history } = this.props
+                // history.push('/login')
+            }
+            this.setState({ redirect: true })
+            NotifyError()
         })
             .catch(function (e) {
                 alert('Error submitting form!')
@@ -72,11 +110,7 @@ class SignUpContainer extends React.PureComponent {
 
     render() {
 
-        const { redirect } = this.state;
-
-        if (redirect) {
-            return <Redirect to='/login' />
-        }
+        const { name, email, password, city, street } = this.state
 
 
         return (
@@ -85,6 +119,13 @@ class SignUpContainer extends React.PureComponent {
                     onSubmitBtnClick={this.onSubmitBtnClick}
                     onChangeloginHandler={this.onChangeloginHandler}
                     onLoginBtnClick={this.onLoginBtnClick}
+                    name={name}
+                    email={email}
+                    password={password}
+                    city={city}
+                    street={street}
+                    notify={this.notify}
+
 
                 />
             </>

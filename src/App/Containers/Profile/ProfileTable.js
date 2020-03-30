@@ -11,8 +11,8 @@ const ProfileModule = ({
 
   return (
     <>
-      <Container style={{ paddingTop: '6rem' }}  >
-        {/* <div className="container" >
+      {/* <Container style={{ paddingTop: '6rem' }}  >
+        <div className="container" >
           <div className="row">
             <div className="col-md-3 ">
               <div className="list-group ">
@@ -98,7 +98,8 @@ const ProfileModule = ({
             </div>
           </div>
         </div> */}
-        <div class="fancy-cards">
+
+      {/* <div class="fancy-cards">
           <h1>Microinteraction on active</h1>
           <p>It triggers a subtle micro-interaction (scales and adjusts) when the user interacts with it.</p>
           <div class="fancy-card">
@@ -111,10 +112,34 @@ const ProfileModule = ({
             <div class="middle"></div>
             <div class="bottom"></div>
           </div>
+        </div> */}
+
+      <aside class="profile-card">
+
+
+        <header>
+          <i class="fas fa-edit fa-lg text-dark" style={{ float: 'right', }} onClick={(e) => onEditProfileBtn(e)}></i>
+          <a >
+
+            <img src="https://cdn0.iconfinder.com/data/icons/social-media-network-4/48/male_avatar-512.png" />
+
+          </a>
+
+          {/* <!-- the username --> */}
+          <h1> {userProfileData.name}</h1>
+          <h2>{userProfileData.email}</h2>
+
+        </header>
+        <div class="profile-bio">
+
+          <h4>Street:{userProfileData.street}</h4>
+          <h4>City:{userProfileData.city}</h4>
         </div>
 
+      </aside>
 
-      </Container>
+
+
 
 
     </>

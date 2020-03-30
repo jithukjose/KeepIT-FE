@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import SearchModule from '../../components/Search/index.search'
-import UsersTableModule from '../Users/TableUsers'
+import UsersTableModule from './TableUsers'
 
 import Pagination from "react-js-pagination"
+import DeleteModalModule from '../../components/Modal/DeleteModalModule'
+
 
 
 class UsersContainer extends Component {
@@ -155,6 +157,9 @@ class UsersContainer extends Component {
   onDeleteBtnClick = async (event, id) => {
     const TOKEN_KEY = 'jwt';
     const token = localStorage.getItem(TOKEN_KEY)
+    this.setState({
+      clickedId: id
+    })
 
     await fetch(`http://localhost:5000/api/users/${id}`, {
       method: 'DELETE',
@@ -168,48 +173,90 @@ class UsersContainer extends Component {
     this.fetchUserData()
   }
 
+  //delete user data after modal confirmation
+  onDeleteConfirmClick = () => {
+
+    this.setState((prevState) => ({
+      isDeleteModalButtonClicked: !prevState.isDeleteModalButtonClicked,
+
+    }))
+
+    const TOKEN_KEY = 'jwt';
+    const token = localStorage.getItem(TOKEN_KEY)
+
+    fetch(`http://localhost:5000/api/users/${this.state.clickedId}`, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token,
+      }
+    })
+    this.fetchUserData()
+
+  }
+
 
   render() {
-    const { slicedData, activePage, filteredResult, totalCount, rowClicked, rowId, saveBtn } = this.state
+    const { slicedData, activePage, filteredResult, totalCount, rowClicked, rowId, saveBtn, isDeleteModalButtonClicked } = this.state
     console.log(saveBtn, 'here')
-
     return (
-      <div>
-        <SearchModule
-          searchHandler={this.SearchHandler}
-          onSearchBtnClick={this.onSearchBtnClick}
-          keyPressHandler={this.KeyPressHandler}
-          onScreenEnterKey={this.onSearchBtnClick}
-          inputValue={this.state.searchString}
-        />
-        <div style={{ float: 'right', paddingright: '100px' }}>
-
+      <>
+        <div class="container text-center" >
+          <div class="costumModal">
+            <h1 class="title" style={{ fontSize: '60px', color: '#757575', fontWeight: 'bold', paddingLeft: '400px' }}>
+              Contacts
+        </h1>
+          </div>
         </div>
-        <UsersTableModule userDatas={filteredResult ? filteredResult : slicedData}
-          onEditClickBtn={this.onEditClickBtn}
-          onDeleteBtnClick={this.onDeleteBtnClick}
-          singleDatas={this.singleDatas}
-          rowClickHandler={this.rowClickHandler}
-          rowClicked={rowClicked}
-          rowId={rowId}
-          onEditChangeHandler={this.onEditChangeHandler}
-          saveBtn={saveBtn}
-        />
-        <div style={{ paddingLeft: '35%', fontWeight: '30%' }}>
-          <Pagination
-            style={{ padding: '20px' }}
-            activePage={activePage}
-            itemsCountPerPage={5}
-            totalItemsCount={totalCount}
-            pageRangeDisplayed={4}
-            onChange={this.handlePageChange}
-            itemClass="page-item"
-            linkClass="page-link"
+
+
+
+        <div style={{ paddingLeft: '10%', paddingTop: '60px' }}>
+          <SearchModule
+            searchHandler={this.SearchHandler}
+            onSearchBtnClick={this.onSearchBtnClick}
+            keyPressHandler={this.KeyPressHandler}
+            onScreenEnterKey={this.onSearchBtnClick}
+            inputValue={this.state.searchString}
           />
 
-        </div>
 
-      </div >
+
+          <UsersTableModule userDatas={filteredResult ? filteredResult : slicedData}
+            onEditClickBtn={this.onEditClickBtn}
+            onDeleteBtnClick={this.onDeleteBtnClick}
+            singleDatas={this.singleDatas}
+            rowClickHandler={this.rowClickHandler}
+            rowClicked={rowClicked}
+            rowId={rowId}
+            onEditChangeHandler={this.onEditChangeHandler}
+            saveBtn={saveBtn}
+          />
+
+
+          <div style={{ paddingLeft: '35%', fontWeight: '30%' }}>
+            <Pagination
+              style={{ padding: '20px' }}
+              activePage={activePage}
+              itemsCountPerPage={10}
+              totalItemsCount={totalCount}
+              pageRangeDisplayed={4}
+              onChange={this.handlePageChange}
+              itemClass="page-item"
+              linkClass="page-link"
+            />
+          </div>
+          <DeleteModalModule
+            onModalClick={this.OnDeleteClick}
+            isDeleteModalButtonClicked={isDeleteModalButtonClicked}
+            onDeleteConfirmClick={this.onDeleteConfirmClick}
+          />
+
+
+        </div >
+
+      </>
     )
   }
 

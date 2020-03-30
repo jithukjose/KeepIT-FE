@@ -14,18 +14,19 @@ const SearchModule = ({
       style={{
         width: '800px',
         margin: '90px',
-        border: '3px solid	#00289e'
+        border: '3px solid	#00289e',
       }}
     >
+
       <InputGroup>
         <InputGroupAddon addonType="prepend"></InputGroupAddon>
         <Input
-          placeholder="Search by ID"
+          placeholder="Search"
           onKeyDown={(e) => keyPressHandler(e)}
           onChange={(e) => searchHandler(e)}
           value={inputValue}
         />
-        <Button onClick={(e) => onScreenEnterKey(e)}>Search</Button>
+        <Button style={{ color: 'danger' }} onClick={(e) => onScreenEnterKey(e)}>Search</Button>
       </InputGroup>
       {children}
     </div>
