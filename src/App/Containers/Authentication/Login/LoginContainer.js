@@ -12,7 +12,9 @@ class LoginContainer extends React.PureComponent {
     state = {
         isLogin: false,
         redirect: false,
-        redirectFromLogin: false
+        redirectFromLogin: false,
+        email: '',
+        password: ''
     }
 
     componentDidMount() {
@@ -30,10 +32,21 @@ class LoginContainer extends React.PureComponent {
         this.setState({
             [fieldName]: value //this value will assign to this respective fieldname
         })
+
+
     }
 
     onLoginSubmitBtn = async (e) => {
         e.preventDefault()
+        const error = this.checkValidation();
+
+        if (!error) {
+            console.log("SUCCESSSS")
+        } else {
+            this.setState({
+                errors: error
+            })
+        }
 
         // Notify()
 
@@ -74,10 +87,62 @@ class LoginContainer extends React.PureComponent {
 
 
     onSignupBtnClick = (e) => {
+        this.checkValidation()
         e.preventDefault()
         const { history } = this.props
         history.push('/signup')
     }
+
+
+    checkValidation = () => {
+        const { email, password } = this.state
+        const validation = (string) => {
+
+            const validEmailRegex =
+                RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
+
+            const isValid = validEmailRegex.test(string)
+
+            if (isValid) {
+                return true
+            }
+            return false
+
+        }
+
+
+        const validatePassword = (string) => {
+
+            const validpasswordRegex = RegExp(/^(?=.*[A-Z])(?=.*\d)/);
+
+            const isValidPassword = validpasswordRegex.test(string)
+
+            if (isValidPassword) {
+                return true
+            }
+            return false
+
+        }
+
+
+        let errors = undefined;
+
+        if (!validation(email) || email === '') {
+            if (!errors) errors = {}
+            errors.email = "email not valid"
+        }
+        if ((!validatePassword(password)) || password === '') {
+            if (!errors) errors = {}
+            errors.password = "Password is not strong enough"
+        }
+        else {
+            console.log("match password");
+        }
+
+        return errors
+
+    }
+
 
     render() {
 
@@ -92,6 +157,7 @@ class LoginContainer extends React.PureComponent {
                     onChangeloginHandler={this.onChangeloginHandler}
                     onSignupBtnClick={this.onSignupBtnClick}
                     notify={this.notify}
+
                 />
             </>
         )

@@ -1,11 +1,11 @@
 import React from 'react'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Row } from 'reactstrap'
 
-const ModalModule = ({ isModalButtonClicked, onModalClick, postBody }) => (
+const ModalModule = ({ isModalButtonClicked, onModalClick, postBody, title }) => (
   <Row>
     <div>
       <Modal isOpen={isModalButtonClicked}>
-        <ModalHeader>modal titlew</ModalHeader>
+        <ModalHeader>{title}</ModalHeader>
         <ModalBody>
           {postBody}
 

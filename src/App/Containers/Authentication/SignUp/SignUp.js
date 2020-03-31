@@ -12,7 +12,7 @@ const SignUpModule = ({
 
     return (
         <>
-            <img className="d-block img-fluid" style={{ height: '60px', cursor: 'pointer' }} src="https://www.plantronics.com/etc/designs/plantronics/clientlib-all/img/poly-logo.png" alt="First slide" />
+            <img className="d-block img-fluid" style={{ height: '50px', cursor: 'pointer' }} src="https://www.plantronics.com/etc/designs/plantronics/clientlib-all/img/poly-logo.png" alt="First slide" />
             <h4 style={{ fontWeight: 'bold' }}>KeepIT</h4>
 
             <div >
@@ -26,11 +26,12 @@ const SignUpModule = ({
                                 </ol>
                                 <div className="carousel-inner" role="listbox">'
                                 <div className="carousel-item active"  >
-                                        <img className="d-block img-fluid" style={{ height: '672px' }} src="https://images.pexels.com/photos/872957/pexels-photo-872957.jpeg" alt="First slide" />
+                                        <img className="d-block img-fluid" style={{ height: '672px' }} src="https://static.pexels.com/photos/33972/pexels-photo.jpg" alt="First slide" />
                                         <div className="carousel-caption d-none d-md-block">
                                             <div className="banner-text">
-                                                <h2>This is Heaven</h2>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
+                                                <h1 style={{ color: 'red', fontWeight: 'bolder' }}>KeepIT</h1>
+                                                <p style={{ color: 'white', fontWeight: 'bolder' }}>Even when everything is perfect, you can always make it better. Break barriers in your head, create something crazy and don't forget anything with KeepIT app...</p>
+
                                             </div>
                                         </div>
                                     </div>
@@ -41,26 +42,26 @@ const SignUpModule = ({
                             <h2 className="text-center">Signup Now</h2>
                             <form className="login-form">
 
-                                <label for="exampleInputEmail1" className="text-uppercase">Name</label>
+                                <label for="exampleInputEmail1" className="text-uppercase">Name *</label>
                                 <input type="text" className="form-control" placeholder="" name="name" onChange={(e) => onChangeloginHandler(e)} />
                                 <div className="form-group">
-                                    <label for="exampleInputEmail1" className="text-uppercase">Email</label>
+                                    <label for="exampleInputEmail1" className="text-uppercase">Email *</label>
                                     <input type="email" className="form-control" placeholder="" name="email" onChange={(e) => onChangeloginHandler(e)} />
                                 </div>
 
 
                                 <div className="form-group">
-                                    <label for="exampleInputPassword1" className="text-uppercase">Password</label>
+                                    <label for="exampleInputPassword1" className="text-uppercase">Password *</label>
                                     <input type="password" className="form-control" placeholder="" name="password" onChange={(e) => onChangeloginHandler(e)} />
                                 </div>
 
                                 <div className="form-group">
-                                    <label for="exampleInputPassword1" className="text-uppercase">Street</label>
+                                    <label for="exampleInputPassword1" className="text-uppercase">Street *</label>
                                     <input type="text" className="form-control" placeholder="" name="street" onChange={(e) => onChangeloginHandler(e)} />
                                 </div>
 
                                 <div className="form-group">
-                                    <label for="exampleInputPassword1" className="text-uppercase">City</label>
+                                    <label for="exampleInputPassword1" className="text-uppercase">City *</label>
                                     <input type="text" className="form-control" placeholder="" name="city" onChange={(e) => onChangeloginHandler(e)} />
                                 </div>
 

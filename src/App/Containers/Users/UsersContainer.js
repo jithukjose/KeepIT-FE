@@ -5,6 +5,8 @@ import UsersTableModule from './TableUsers'
 import Pagination from "react-js-pagination"
 import DeleteModalModule from '../../components/Modal/DeleteModalModule'
 import SuccessModalModule from '../../components/Modal/SuccessModalModule'
+// import ButtonModule from './ButtonModal'
+import AddUserModalModule from './AddUserModalModule'
 
 
 
@@ -185,6 +187,14 @@ class UsersContainer extends Component {
     })
   }
 
+  onAddBtnClick = () => {
+    this.setState((prevState) => ({
+      isAddNoteModalButton: !prevState.isAddNoteModalButton,
+
+    }))
+  }
+
+
   //delete user data after modal confirmation
   onDeleteConfirmClick = () => {
 
@@ -210,7 +220,7 @@ class UsersContainer extends Component {
 
 
   render() {
-    const { slicedData, activePage, filteredResult, totalCount, rowClicked, rowId, saveBtn, isDeleteModalButtonClicked, isSuccessModalButton } = this.state
+    const { slicedData, activePage, filteredResult, totalCount, rowClicked, rowId, saveBtn, isDeleteModalButtonClicked, isSuccessModalButton, isAddNoteModalButton } = this.state
     console.log(this.state.rowId, 'haahah')
     return (
       <>
@@ -222,7 +232,10 @@ class UsersContainer extends Component {
           </div>
         </div>
 
-
+        {/* 
+        <ButtonModule
+          onAddBtnClick={this.onAddBtnClick}
+          isAddNoteModalButton={isAddNoteModalButton} /> */}
 
         <div style={{ paddingLeft: '10%', paddingTop: '60px' }}>
           <SearchModule
@@ -267,9 +280,13 @@ class UsersContainer extends Component {
           <SuccessModalModule
             isSuccessModalButton={isSuccessModalButton}
             onModalClick={this.onModalClick} />
-
-
         </div >
+
+        <AddUserModalModule
+          isAddNoteModalButton={isAddNoteModalButton}
+          onAddChangeHandler={this.onAddChangeHandler}
+          onAddNoteSubmmitBtn={this.onAddNoteSubmmitBtn}
+          onModalClick={this.onAddBtnClick} />
 
       </>
     )

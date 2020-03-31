@@ -1,14 +1,17 @@
 import React from 'react'
-// import { connect } from 'react-redux'
 
-// import CardModule from '../../components/Card/index.card'
 import SearchModule from '../../components/Search/index.search'
 import ModalModule from '../../components/Modal/Modal'
 import DeleteModalModule from '../../components/Modal/DeleteModalModule'
+import AddUserModalModule from './AddUserModalModule'
 // import Pagination from "react-js-pagination"
+import ButtonModule from '../Posts/ButtonModal'
+import { NotifyDelete, NotifyAdded } from '../../components/Toaster/Tosater'
+import { ToastContainer } from 'react-toastify';
 
 import CardsModule from './PostCard'
 import './PostsModules.css'
+import './ButtonModal.css'
 
 class PostContainer extends React.PureComponent {
   state = {
@@ -59,7 +62,7 @@ class PostContainer extends React.PureComponent {
 
   KeyPressHandler = (e) => {
     if (e.keyCode === 13) {
-      console.log('hello')
+
       this.SearchData()
     }
   }
@@ -98,7 +101,9 @@ class PostContainer extends React.PureComponent {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token,
       }
+
     })
+    NotifyDelete()
     fetchPostData()
 
   }
@@ -123,8 +128,54 @@ class PostContainer extends React.PureComponent {
     }))
   }
 
+  onAddBtnClick = () => {
+    this.setState((prevState) => ({
+      isAddNoteModalButton: !prevState.isAddNoteModalButton,
+
+    }))
+  }
+
+  onAddNoteSubmmitBtn = () => {
+    const { fetchPostData } = this.props
+    const userId = localStorage.getItem('userId')
+    const changedData = {
+      title: this.state.title,
+      body: this.state.description,
+      userId
+    }
+    const TOKEN_KEY = 'jwt';
+    const token = localStorage.getItem(TOKEN_KEY)
+
+
+    fetch(`http://localhost:5000/api/posts`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token,
+      },
+      body: JSON.stringify(changedData)
+    }).then(() => {
+      this.setState((prevState) => ({
+        isAddNoteModalButton: !prevState.isAddNoteModalButton,
+
+      }))
+      NotifyAdded()
+      fetchPostData()
+    })
+
+  }
+
+  onAddChangeHandler = (event) => {
+    let value = event.target.value
+    let fieldName = event.target.name
+    this.setState({
+      [fieldName]: value //this value will assign to this respective fieldname
+    })
+  }
+
   render() {
-    const { filteredPostResult, isModalButtonClicked, postBody, isDeleteModalButtonClicked, activePage, totalCount } = this.state
+    const { filteredPostResult, isModalButtonClicked, postBody, title, isDeleteModalButtonClicked, activePage, totalCount, isAddNoteModalButton } = this.state
 
 
     return (
@@ -138,6 +189,15 @@ class PostContainer extends React.PureComponent {
             </div>
           </div>
 
+          <ButtonModule
+            onAddBtnClick={this.onAddBtnClick}
+            isAddNoteModalButton={isAddNoteModalButton} />
+
+          <AddUserModalModule
+            isAddNoteModalButton={isAddNoteModalButton}
+            onAddChangeHandler={this.onAddChangeHandler}
+            onAddNoteSubmmitBtn={this.onAddNoteSubmmitBtn}
+            onModalClick={this.onAddBtnClick} />
 
           <div style={{ paddingLeft: '13% ', paddingTop: '60px' }}>
             <SearchModule
@@ -148,11 +208,12 @@ class PostContainer extends React.PureComponent {
             />
           </div>
 
+
           <ModalModule
             onModalClick={this.onDetailClick}
             isModalButtonClicked={isModalButtonClicked}
             postBody={postBody}
-            title={this.title}
+            title={title}
           />
           <CardsModule
             slicedData={filteredPostResult}
@@ -164,6 +225,10 @@ class PostContainer extends React.PureComponent {
             isDeleteModalButtonClicked={isDeleteModalButtonClicked}
             onDeleteConfirmClick={this.onDeleteConfirmClick}
           />
+          <div>
+            <ToastContainer
+              hideProgressBar />
+          </div>
 
         </div>
         {/* <Pagination

@@ -5,7 +5,7 @@ import './login.css'
 
 const LoginModule = ({
     onLoginSubmitBtn,
-    onChangeloginHandler, onSignupBtnClick
+    onChangeloginHandler, onSignupBtnClick, errors
 
 }) => {
 
@@ -28,8 +28,9 @@ const LoginModule = ({
                                         <img className="d-block img-fluid" style={{ height: '550px' }} src="https://images.pexels.com/photos/7097/people-coffee-tea-meeting.jpg" alt="First slide" />
                                         <div className="carousel-caption d-none d-md-block">
                                             <div className="banner-text">
-                                                <h2 style={{ color: 'red' }}>KeepIT</h2>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
+                                                <h1 style={{ color: 'red', fontWeight: 'bolder' }}>KeepIT</h1>
+                                                <h5>Personal data.Organised.Effortless.</h5>
+                                                <h5>Keep your data inside KeepIT</h5>
                                             </div>
                                         </div>
                                     </div>
@@ -64,12 +65,14 @@ const LoginModule = ({
                                 <div className="form-group">
                                     <label for="exampleInputEmail1" className="text-uppercase">Email</label>
                                     <input type="email" className="form-control" placeholder="" name="email" onChange={(e) => onChangeloginHandler(e)} />
+                                    <div><p style={{ color: 'red' }}>{errors && errors.email}</p></div>
 
                                 </div>
                                 <div className="form-group">
                                     <label for="exampleInputPassword1" className="text-uppercase">Password</label>
                                     <input type="password" className="form-control" placeholder="" name="password" onChange={(e) => onChangeloginHandler(e)} />
                                 </div>
+                                <div><p style={{ color: 'red' }}>{errors && errors.password}</p></div>
 
 
                                 <div className="form-check">
