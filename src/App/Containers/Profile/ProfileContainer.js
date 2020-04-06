@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import ProfileModule from '../Profile/ProfileTable'
-// import moment from 'moment'
+
+import ProfileModalModule from './profileModalModule'
+import { Notify } from '../../components/Toaster/Tosater'
+import { ToastContainer } from 'react-toastify';
 
 class ProfileContainer extends Component {
     state = {
@@ -35,14 +38,22 @@ class ProfileContainer extends Component {
             [fieldName]: value //this value will assign to this respective fieldname
         })
     }
+    onModalClick = () => {
+        this.setState((prevState) => ({
+            isSuccessModalButton: !prevState.isSuccessModalButton,
+
+        }))
+    }
     //disable read only mode on button click
     onEditProfileBtn = () => {
+        this.onModalClick()
         this.setState({
             readOnlyMode: false,
         })
     }
 
     onSubmitProfileBtn = async (event) => {
+        this.onModalClick()
         const { postProfileData, fetchProfileData, userProfileData } = this.props
         // event.preventDefault();
         const changedData = {
@@ -52,10 +63,12 @@ class ProfileContainer extends Component {
             email: null
         }
 
+
         await postProfileData(changedData)
         this.setState({
             readOnlyMode: true,
         })
+        Notify()
         fetchProfileData()
         const { name, street, city } = userProfileData
 
@@ -67,19 +80,29 @@ class ProfileContainer extends Component {
 
     render() {
 
-        const { name, street, city, readOnlyMode } = this.state
+        const { name, street, city, readOnlyMode, isSuccessModalButton } = this.state
         return (
-            <ProfileModule
-                name={name}
-                street={street}
-                city={city}
-                userProfileData={this.props.userProfileData}
-                readOnlyMode={readOnlyMode}
-                onEditProfileBtn={this.onEditProfileBtn}
-                onEditChangeHandler={this.onEditChangeHandler}
-                onSubmitProfileBtn={this.onSubmitProfileBtn}
-
-            />
+            <>
+                <ProfileModule
+                    name={name}
+                    street={street}
+                    city={city}
+                    userProfileData={this.props.userProfileData}
+                    readOnlyMode={readOnlyMode}
+                    onEditProfileBtn={this.onEditProfileBtn}
+                />
+                <ProfileModalModule
+                    isSuccessModalButton={isSuccessModalButton}
+                    onModalClick={this.onEditProfileBtn}
+                    userProfileData={this.props.userProfileData}
+                    onEditChangeHandler={this.onEditChangeHandler}
+                    onSubmitProfileBtn={this.onSubmitProfileBtn}
+                />
+                <div>
+                    <ToastContainer
+                        hideProgressBar />
+                </div>
+            </>
         )
     }
 }

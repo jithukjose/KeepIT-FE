@@ -7,7 +7,7 @@ const UsersTableModule = ({ userDatas, onEditClickBtn, onDeleteBtnClick, onEditC
 
     (<tr
     >
-      <td>{singleDatas.id}</td>
+
       <td>{rowClicked && singleDatas.id === rowId ? <input defaultValue={singleDatas.name} id="Name" name="name" key={index} onChange={(e) => onEditChangeHandler(e, singleDatas.id)}></input> : singleDatas.name}</td>
 
       <td>{singleDatas.email}</td>
@@ -17,32 +17,35 @@ const UsersTableModule = ({ userDatas, onEditClickBtn, onDeleteBtnClick, onEditC
       <td>{rowClicked && singleDatas.id === rowId ? <input defaultValue={singleDatas.city} id="Name" name="city" key={index} onChange={(e) => onEditChangeHandler(e)}></input> : singleDatas.city}</td>
 
       <i style={{ paddingleft: '3em', padding: '20px', cursor: 'pointer' }}
+        className={rowClicked && singleDatas.id === rowId && saveBtn && saveBtn === true ? "fas fa-check-square fa-lg text-primary" : "fas fa-edit fa-lg text-dark"} onClick={(e) => onEditClickBtn(singleDatas)}></i >
 
-        className={rowClicked && singleDatas.id === rowId && saveBtn && saveBtn === true ? "fas fa-check-square" : "fas fa-edit"}
-
-
-        onClick={(e) => onEditClickBtn(singleDatas)}></i >
-
-      <i style={{ cursor: 'pointer' }} class="fas fa-trash" onClick={(e) => onDeleteBtnClick(e, singleDatas.id)}></i>
+      <i style={{ cursor: 'pointer' }} className="fas fa-trash fa-lg text-danger " onClick={(e) => onDeleteBtnClick(e, singleDatas.id)}></i>
     </tr >)
+
+
 
   )
   )
   return (
-    <div style={{ width: '90%', padding: '10px', margin: '0px' }}>
-      <Table dark striped hover >
-        <thead>
-          <tr>
-            <th>User ID</th>
-            <th>Name</th>
-            <th>Email ID</th>
-            <th>Street</th>
-            <th>City</th>
-          </tr>
-        </thead>
-        <tbody >{renderRows}</tbody>
-      </Table>
-    </div>
+    <>
+      {/* <div class="col-xs-6 col-sm-4"> */}
+
+      <div style={{ width: '90%', padding: '10px', margin: '0px', textAlign: 'center' }}>
+        <Table striped hover >
+          <thead>
+            <tr>
+
+              <th>Name</th>
+              <th>Email ID</th>
+              <th>Street</th>
+              <th>City</th>
+            </tr>
+          </thead>
+          <tbody >{renderRows}</tbody>
+        </Table>
+      </div>
+
+    </>
 
   )
 }

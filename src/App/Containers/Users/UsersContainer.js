@@ -1,8 +1,13 @@
 import React, { Component } from 'react'
 import SearchModule from '../../components/Search/index.search'
-import UsersTableModule from '../Users/TableUsers'
+import UsersTableModule from './TableUsers'
 
 import Pagination from "react-js-pagination"
+import DeleteModalModule from '../../components/Modal/DeleteModalModule'
+import SuccessModalModule from '../../components/Modal/SuccessModalModule'
+// import ButtonModule from './ButtonModal'
+import AddUserModalModule from './AddUserModalModule'
+
 
 
 class UsersContainer extends Component {
@@ -17,7 +22,8 @@ class UsersContainer extends Component {
     rowClicked: false,
     rowId: '',
     singleDatas: '',
-    saveBtn: false
+    saveBtn: false,
+    isSuccessModalButton: false
   }
 
   componentDidMount() {
@@ -119,8 +125,15 @@ class UsersContainer extends Component {
     })
   }
 
+  onModalClick = () => {
+    this.setState((prevState) => ({
+      isSuccessModalButton: !prevState.isSuccessModalButton,
 
+    }))
+  }
   onEditClickBtn = (data, id) => {
+
+
     this.setState({
       rowClicked: true,
       rowId: data.id,
@@ -134,29 +147,61 @@ class UsersContainer extends Component {
     }
     const TOKEN_KEY = 'jwt';
     const token = localStorage.getItem(TOKEN_KEY)
+
     if (this.state.saveBtn) {
-      fetch(`http://localhost:5000/api/users/${data.id}`, {
+      fetch(`http://localhost:5000/api/users/${this.state.rowId}`, {
+
         method: 'PUT',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + token,
         },
+
         body: JSON.stringify(editedData)
+
+
       })
+      this.setState((prevState) => ({
+        isSuccessModalButton: !prevState.isSuccessModalButton,
+
+      }))
       this.setState({
         saveBtn: false,
         rowClicked: false
       })
     }
+
     this.fetchUserData()
+
+  }
+  onDeleteBtnClick = (event, id) => {
+
+    this.setState((prevState) => ({
+      isDeleteModalButtonClicked: !prevState.isDeleteModalButtonClicked,
+
+    }))
+
+    this.setState({
+      deletedId: id
+    })
   }
 
-  onDeleteBtnClick = async (event, id) => {
+  onAddBtnClick = () => {
+    this.setState((prevState) => ({
+      isAddNoteModalButton: !prevState.isAddNoteModalButton,
+
+    }))
+  }
+
+
+  //delete user data after modal confirmation
+  onDeleteConfirmClick = () => {
+
+
     const TOKEN_KEY = 'jwt';
     const token = localStorage.getItem(TOKEN_KEY)
-
-    await fetch(`http://localhost:5000/api/users/${id}`, {
+    fetch(`http://localhost:5000/api/users/${this.state.deletedId}`, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',
@@ -164,52 +209,86 @@ class UsersContainer extends Component {
         'Authorization': 'Bearer ' + token,
       }
     })
+    this.setState((prevState) => ({
+      isDeleteModalButtonClicked: !prevState.isDeleteModalButtonClicked,
+
+    }))
 
     this.fetchUserData()
+
   }
 
 
   render() {
-    const { slicedData, activePage, filteredResult, totalCount, rowClicked, rowId, saveBtn } = this.state
-    console.log(saveBtn, 'here')
-
+    const { slicedData, activePage, filteredResult, totalCount, rowClicked, rowId, saveBtn, isDeleteModalButtonClicked, isSuccessModalButton, isAddNoteModalButton } = this.state
+    console.log(this.state.rowId, 'haahah')
     return (
-      <div>
-        <SearchModule
-          searchHandler={this.SearchHandler}
-          onSearchBtnClick={this.onSearchBtnClick}
-          keyPressHandler={this.KeyPressHandler}
-          onScreenEnterKey={this.onSearchBtnClick}
-          inputValue={this.state.searchString}
-        />
-        <div style={{ float: 'right', paddingright: '100px' }}>
-
+      <>
+        <div class="container text-center" >
+          <div class="costumModal">
+            <h1 class="title" style={{ fontSize: '60px', color: '#757575', fontWeight: 'bold', paddingLeft: '400px' }}>
+              Contacts
+        </h1>
+          </div>
         </div>
-        <UsersTableModule userDatas={filteredResult ? filteredResult : slicedData}
-          onEditClickBtn={this.onEditClickBtn}
-          onDeleteBtnClick={this.onDeleteBtnClick}
-          singleDatas={this.singleDatas}
-          rowClickHandler={this.rowClickHandler}
-          rowClicked={rowClicked}
-          rowId={rowId}
-          onEditChangeHandler={this.onEditChangeHandler}
-          saveBtn={saveBtn}
-        />
-        <div style={{ paddingLeft: '35%', fontWeight: '30%' }}>
-          <Pagination
-            style={{ padding: '20px' }}
-            activePage={activePage}
-            itemsCountPerPage={5}
-            totalItemsCount={totalCount}
-            pageRangeDisplayed={4}
-            onChange={this.handlePageChange}
-            itemClass="page-item"
-            linkClass="page-link"
+
+        {/* 
+        <ButtonModule
+          onAddBtnClick={this.onAddBtnClick}
+          isAddNoteModalButton={isAddNoteModalButton} /> */}
+
+        <div style={{ paddingLeft: '10%', paddingTop: '60px' }}>
+          <SearchModule
+            searchHandler={this.SearchHandler}
+            onSearchBtnClick={this.onSearchBtnClick}
+            keyPressHandler={this.KeyPressHandler}
+            onScreenEnterKey={this.onSearchBtnClick}
+            inputValue={this.state.searchString}
           />
 
-        </div>
 
-      </div >
+
+          <UsersTableModule userDatas={filteredResult ? filteredResult : slicedData}
+            onEditClickBtn={this.onEditClickBtn}
+            onDeleteBtnClick={this.onDeleteBtnClick}
+            singleDatas={this.singleDatas}
+            rowClickHandler={this.rowClickHandler}
+            rowClicked={rowClicked}
+            rowId={rowId}
+            onEditChangeHandler={this.onEditChangeHandler}
+            saveBtn={saveBtn}
+          />
+
+
+          <div style={{ paddingLeft: '35%', fontWeight: '30%' }}>
+            <Pagination
+              style={{ padding: '20px' }}
+              activePage={activePage}
+              itemsCountPerPage={10}
+              totalItemsCount={totalCount}
+              pageRangeDisplayed={4}
+              onChange={this.handlePageChange}
+              itemClass="page-item"
+              linkClass="page-link"
+            />
+          </div>
+          <DeleteModalModule
+            onModalClick={this.onDeleteBtnClick}
+            isDeleteModalButtonClicked={isDeleteModalButtonClicked}
+            onDeleteConfirmClick={this.onDeleteConfirmClick}
+          />
+          <SuccessModalModule
+            isSuccessModalButton={isSuccessModalButton}
+            onModalClick={this.onModalClick} />
+        </div >
+
+        <AddUserModalModule
+          isAddNoteModalButton={isAddNoteModalButton}
+          onAddChangeHandler={this.onAddChangeHandler}
+          onAddNoteSubmmitBtn={this.onAddNoteSubmmitBtn}
+          onModalClick={this.onAddBtnClick} />
+
+      </>
     )
   }
 
